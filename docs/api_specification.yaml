@@ -1,0 +1,224 @@
+openapi: 3.0.3
+info:
+  title: Advertisement API Document
+  description: Advertisement's operation, including post and query.
+  version: 1.0.0
+tags:
+  - name: advertisement
+    description: The advertisement's task.
+paths:
+  /api/v1/ad:
+    get:
+      tags:
+        - advertisement
+      parameters:
+        - name: offset
+          in: query
+          description: The start number of the result.
+          required: true
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+            maximum: 100
+        - name: limit
+          in: query
+          description: The count of the result.
+          required: true
+          schema:
+            type: integer
+            default: 5
+            minimum: 1
+            maximum: 100
+        - name: age
+          in: query
+          description: The age of the query.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+        - name: gender
+          in: query
+          description: The gender of the query.
+          required: false
+          schema:
+            type: string
+            enum:
+              - "M"
+              - "F"
+        - name: country
+          in: query
+          description: The country of the query.
+          required: false
+          schema:
+            type: string
+            enum:
+              - "TW"
+              - "JP"
+              - fit with https://zh.wikipedia.org/wiki/ISO_3166-1
+        - name: platform
+          in: query
+          description: The platform of the query.
+          required: false
+          schema:
+            type: string
+            enum:
+              - "android"
+              - "ios"
+              - "web"
+      responses:
+        '200':
+          description: "Success to query advertisement.."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/response_success_get_advertisement"
+        '400':
+          description: "Fail to query the advertisement due to client error."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/response_failure"
+        '500':
+          description: "Fail to query the advertisement due to server error."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/response_failure"
+    post:
+      description: "To sign up an account for the application."
+      tags:
+        - advertisement
+      requestBody:
+        description: "The content for sign up."
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/request_add_advertisement"
+      responses:
+        "200":
+          description: "Success to add the advertisement."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/response_success_add_advertisement"
+        '400':
+          description: "Fail to add the advertisement due to client error."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/response_failure"
+        '409':
+          description: "Fail to add the advertisement due to that time of advertisement is full."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/response_failure"
+        '429':
+          description: "Fail to add the advertisement due to reach limit of today request number."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/response_failure"
+        '500':
+          description: "Fail to add the advertisement due to server error."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/response_failure"
+components:
+  schemas:
+    request_add_advertisement:
+      type: object
+      properties:
+        title:
+          type: string
+          description: The title of the advertisement.
+        startAt:
+          type: string
+          description: The start time of the advertisement.
+        EndAt:
+          type: string
+          description: The end time of the advertisement.
+        conditions:
+          type: object
+          description: The condition of the advertisement.
+          properties:
+            ageStart:
+              type: number
+              description: The start of the advertisement's goal audience's age.
+              items:
+                type: number
+                minimum: 1
+                maximum: 100
+                default: 1
+            ageEnd:
+              type: number
+              description: The end of the advertisement's goal audience's age.
+              items:
+                type: number
+                minimum: 1
+                maximum: 100
+                default: 100
+            gender:
+              type: array
+              description: The genders of the advertisement's goal audience.
+              default: ["M","F"]
+              items:
+                type: string
+                enum:
+                  - "M"
+                  - "F"
+            country:
+              type: array
+              description: The countries of the advertisement's goal audience.
+              items:
+                type: string
+                enum:
+                  - "TW"
+                  - "JP"
+                  - fit with https://zh.wikipedia.org/wiki/ISO_3166-1
+            platform:
+              type: array
+              description: The platforms of the advertisement's goal audience.
+              default: ["android","ios","web"]
+              items:
+                type: string
+                enum:
+                  - "android"
+                  - "ios"
+                  - "web"
+      example:
+        title: "Example Title"
+        startAt: "2023-01-01T01:00:00.000Z"
+        endAt: "2023-12-31T01:00:00.000Z"
+
+
+    response_success_add_advertisement:
+      type: object
+    response_success_get_advertisement:
+      type: object
+      description: The success response of the advertisement query.
+      properties:
+        items:
+          type: array
+          items:
+            properties:
+              title:
+                type: string
+                description: The title of the advertisement
+              endAt:
+                type: string
+                description: The end time of the advertisement.
+            example:
+              title: "Example Title"
+              endAt: "2023-12-31T01:00:00.000Z"
+    response_failure:
+      type: object
+      properties:
+        reason:
+          type: string
+          description: The reason of the failure request.
+
+  
