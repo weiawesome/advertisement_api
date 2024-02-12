@@ -93,7 +93,7 @@ Q、對於達到題目要求的設計
 
 由於是採用RESTful設計風格進行設計，因此使用OPENAPI(舊為Swagger)作為API規範文件非常合適。
 
-[API文檔內容](../docs/api_specification.yaml)
+[API文檔內容](api_specification.yaml)
 
 ```
 備註 :
@@ -102,7 +102,7 @@ Q、對於達到題目要求的設計
 
 ## 資料庫設計
 ### Schema Diagram 設計
-![schema_diagram](schema_diagram.png)
+![schema_diagram](../assets/schema_diagram.png)
 ```
 備註 :
     透過schema diagram實體的關聯性並不大，
@@ -180,7 +180,7 @@ Q、對於達到題目要求的設計
 
 ## 專案架構與系統架構設計
 ### 專案設計 - [階層式架構](https://en.wikipedia.org/wiki/Multitier_architecture#Three-tier_architecture)
-![layered_structure.png](layered_structure.png)
+![layered_structure.png](../assets/layered_structure.png)
 
 ```markdown
 Project Architecture
@@ -220,7 +220,7 @@ Project Architecture
     docs 資料夾內放置相關文檔
 ```
 ### 系統架構設計
-![system_architecture.png](system_architecture.png)
+![system_architecture.png](../assets/system_architecture.png)
 1. 反向代理伺服器
 ```可以作為快取與附載均衡器的作用```
 2. 後端伺服器
