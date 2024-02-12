@@ -177,3 +177,65 @@ Q、對於達到題目要求的設計
     Value : 1 (次數)
     (同時設定隔日哈希表過期)
 ```
+
+## 專案架構與系統架構設計
+### 專案設計 - [階層式架構](https://en.wikipedia.org/wiki/Multitier_architecture#Three-tier_architecture)
+![layered_structure.png](layered_structure.png)
+
+```markdown
+Project Architecture
+
+├── api
+│   ├── handler
+│   ├── middleware
+│   ├── request
+│   ├── response
+│   ├── routes
+│
+├── internal
+│   ├── repository
+│   ├── service
+│
+├── templates
+│
+├── test
+│
+├── docs
+│
+├── go.mod
+├── go.sum
+│
+├── main.go
+```
+- Presentation Layer
+  - api 資料夾下，routes、handler與middleware
+- Business Logic Layer
+  - internal 資料夾下，service代表一系列邏輯服務
+- Data Access Layer
+  - internal 資料夾下，repository將與資料互動程序都放這
+```
+備註 :
+    test 資料夾內放置一系列測試檔案
+    templates 資料夾內放置靜態文件
+    docs 資料夾內放置相關文檔
+```
+### 系統架構設計
+![system_architecture.png](system_architecture.png)
+1. 反向代理伺服器
+```可以作為快取與附載均衡器的作用```
+2. 後端伺服器
+```主要作用為處理一系列邏輯處理，通訊協議採用http```
+3. 系統監測系統
+```透過grafana、proetheus、influxdb等等資料進行分析與呈現```
+4. 快取系統
+```透過此系統提升查詢時間，減輕查詢資料庫壓力```
+5. 資料庫
+```為實際資料存處位置```
+
+```
+備註 :
+    為方便開發會先透過docker-compose確保系統可運作，後續新增kubernetes的部署
+    資料庫當中，
+        在關聯式資料庫會採用主從式架構 達成讀寫分離。
+        在非關聯式資料庫採用集群的方式，以提升查詢效能。
+```
