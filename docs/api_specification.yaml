@@ -219,6 +219,6 @@ components:
       properties:
         reason:
           type: string
-          description: The reason of the failure request.
+          description: The reason of the error request.
 
   
