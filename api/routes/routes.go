@@ -17,8 +17,10 @@ func InitRoutes() *gin.Engine {
 	basicRouter := r.Group("/api/v1")
 
 	apiDocsRouter := basicRouter.Group("/docs")
+	advertisementRouter := basicRouter.Group("/ad")
 
 	InitAPIDocsRoutes(apiDocsRouter)
+	InitAdvertisementRoutes(advertisementRouter)
 
 	return r
 }
