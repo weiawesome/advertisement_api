@@ -24,10 +24,10 @@ func (err DayLimitError) Error() string {
 	return err.Reason
 }
 
-type TimeLimitError struct {
+type DurationLimitError struct {
 	Reason string `json:"reason"`
 }
 
-func (err TimeLimitError) Error() string {
+func (err DurationLimitError) Error() string {
 	return err.Reason
 }
