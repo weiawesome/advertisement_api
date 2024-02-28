@@ -3,10 +3,10 @@ package advertisement
 import "time"
 
 type AddAdvertisementRequest struct {
-	Title     *string   `json:"title"`
-	StartAt   time.Time `json:"startAt"`
-	EndAt     time.Time `json:"endAt"`
-	Condition Condition `json:"condition"`
+	Title      *string   `json:"title"`
+	StartAt    time.Time `json:"startAt"`
+	EndAt      time.Time `json:"endAt"`
+	Conditions Condition `json:"conditions"`
 }
 type Condition struct {
 	AgeStart *int     `json:"ageStart"`
