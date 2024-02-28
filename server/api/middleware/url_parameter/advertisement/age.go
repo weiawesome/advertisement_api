@@ -3,23 +3,27 @@ package advertisement
 import (
 	"advertisement_api/api/response/failure"
 	"advertisement_api/utils"
+	"errors"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
 )
 
-func validateAge(age int) bool {
-	if age != utils.GetDefaultAge() && (age < utils.GetMinAge() || age > utils.GetMaxAge()) {
-		return false
-	}
-	return true
-}
-
-func parseAge(age string) (int, error) {
+func parseValidateAge(age string) (int, error) {
 	if age == "" {
 		return utils.GetDefaultAge(), nil
 	} else {
-		return strconv.Atoi(age)
+
+		age, err := strconv.Atoi(age)
+		if err != nil {
+			return age, err
+		}
+
+		if age < utils.GetMinAge() || age > utils.GetMaxAge() {
+			return age, errors.New("invalidate age")
+		} else {
+			return age, err
+		}
 	}
 }
 
@@ -27,16 +31,9 @@ func MiddlewareAge() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		age := c.DefaultQuery("age", "")
 
-		ageInt, err := parseAge(age)
+		ageInt, err := parseValidateAge(age)
 		if err != nil {
 			e := failure.ClientError{Reason: "age's parameter parse error, " + err.Error()}
-			c.JSON(http.StatusBadRequest, e)
-			c.Abort()
-			return
-		}
-
-		if status := validateAge(ageInt); status == false {
-			e := failure.ClientError{Reason: "age's parameter validate error"}
 			c.JSON(http.StatusBadRequest, e)
 			c.Abort()
 			return
