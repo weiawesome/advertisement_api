@@ -1,6 +1,9 @@
 package routes
 
 import (
+	"advertisement_api/internal/repository/redis"
+	"advertisement_api/internal/repository/sql"
+	"advertisement_api/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,13 +17,16 @@ func InitRoutes() *gin.Engine {
 
 	r.LoadHTMLGlob("templates/*")
 
-	basicRouter := r.Group("/api/v1")
+	basicRouter := r.Group("/api/" + utils.GetVersion())
 
 	apiDocsRouter := basicRouter.Group("/docs")
 	advertisementRouter := basicRouter.Group("/ad")
 
+	sqlRepository := sql.NewRepository()
+	redisRepository := redis.NewRepository()
+
 	InitAPIDocsRoutes(apiDocsRouter)
-	InitAdvertisementRoutes(advertisementRouter)
+	InitAdvertisementRoutes(advertisementRouter, sqlRepository, redisRepository)
 
 	return r
 }

@@ -3,11 +3,13 @@ package advertisement
 import (
 	"advertisement_api/api/response/failure"
 	"advertisement_api/utils"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
 func validatePlatform(platform string) bool {
+	fmt.Println(utils.GetPlatformsMap()[platform])
 	return platform == utils.GetDefaultPlatform() || utils.GetPlatformsMap()[platform]
 }
 
