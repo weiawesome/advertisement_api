@@ -102,7 +102,7 @@ Q、對於達到題目要求的設計
 
 ## 資料庫設計
 ### Schema Diagram 設計
-![schema_diagram](../assets/schema_diagram.png)
+![schema_diagram](../schema_diagram.png)
 ```
 備註 :
     透過schema diagram實體的關聯性並不大，
@@ -180,8 +180,9 @@ Q、對於達到題目要求的設計
 
 ## 專案架構與系統架構設計
 ### 專案設計 - [階層式架構](https://en.wikipedia.org/wiki/Multitier_architecture#Three-tier_architecture)
-![layered_structure.png](../assets/layered_structure.png)
+![layered_structure.png](../layered_structure.png)
 
+#### 為清晰地理解架構 將伺服器相關程序均設在server資料夾中
 ```markdown
 Project Architecture
 
@@ -220,7 +221,7 @@ Project Architecture
     docs 資料夾內放置相關文檔
 ```
 ### 系統架構設計
-![system_architecture.png](../assets/system_architecture.png)
+![system_architecture.png](../system_architecture.png)
 1. 反向代理伺服器
 ```可以作為快取與附載均衡器的作用```
 2. 後端伺服器
