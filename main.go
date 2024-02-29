@@ -3,6 +3,7 @@ package main
 import (
 	"advertisement_api/api/routes"
 	"advertisement_api/utils"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -31,6 +32,7 @@ func main() {
 		}
 	}()
 
+	gin.SetMode(gin.ReleaseMode)
 	r := routes.InitRoutes()
 	err := r.Run()
 
