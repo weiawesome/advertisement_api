@@ -12,7 +12,7 @@ var (
 	defaultRedisHost     = "localhost"
 	defaultRedisPort     = "6379"
 	defaultRedisPassword = "DefaultPassword"
-	defaultRedisDb       = "DefaultDb"
+	defaultRedisDb       = "0"
 
 	defaultInfluxDbHost   = "localhost"
 	defaultInfluxDbPort   = "8086"
