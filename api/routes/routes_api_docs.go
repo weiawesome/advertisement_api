@@ -6,7 +6,7 @@ import (
 )
 
 func InitAPIDocsRoutes(r *gin.RouterGroup) {
-	r.StaticFile("/api_specification.yaml", "docs/api_specification.yaml")
+	r.StaticFile("/api_specification.yaml", "assets/docs/api_specification.yaml")
 	r.GET("", func(c *gin.Context) {
 		c.Header("Cache-Control", "no-cache, no-store, must-revalidate")
 		c.Header("Pragma", "no-cache")
