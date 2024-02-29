@@ -12,6 +12,7 @@ func InitRoutes() *gin.Engine {
 
 	err := r.SetTrustedProxies(nil)
 	if err != nil {
+		utils.LogFatal(err.Error())
 		return nil
 	}
 
