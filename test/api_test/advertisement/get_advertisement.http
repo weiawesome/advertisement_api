@@ -1,0 +1,3 @@
+### Send GET request to get advertisements
+GET {{HOST_URL}}/api/{{API_VERSION}}/ad?limit=20&age=24&gender=F&country=TW&platform=ios
+Content-Type: application/json
