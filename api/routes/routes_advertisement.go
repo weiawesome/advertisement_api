@@ -19,5 +19,5 @@ func InitAdvertisementRoutes(r *gin.RouterGroup, sqlRepository *sql.Repository, 
 		(&advertisement.HandlerGetAdvertisement{Service: advertisementService.ServiceGetAdvertisement{SqlRepository: *sqlRepository, RedisRepository: *redisRepository}}).Handle)
 	r.POST("", content_type.MiddlewareApplicationJson(),
 		addAdvertisement.MiddlewareAddAdvertisement(),
-		(&advertisement.HandlerAddAdvertisement{Service: advertisementService.ServiceAddAdvertisement{SqlRepository: *sqlRepository, RedisRepository: *redisRepository}}).Handle)
+		(&advertisement.HandlerAddAdvertisement{Service: advertisementService.ServiceAddAdvertisement{SqlRepository: *sqlRepository}}).Handle)
 }
