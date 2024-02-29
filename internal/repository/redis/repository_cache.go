@@ -2,8 +2,10 @@ package redis
 
 import (
 	"advertisement_api/api/response/advertisement"
+	"advertisement_api/utils"
 	"context"
 	"encoding/json"
+	"math/rand"
 	"time"
 )
 
@@ -13,8 +15,13 @@ func (r *Repository) SaveCache(key string, value advertisement.GetAdvertisementR
 	if err != nil {
 		return err
 	}
-	duration := 5
-	expireDuration := time.Minute * time.Duration(duration)
+
+	minDuration := utils.GetMinCacheMinute()
+	maxDuration := utils.GetMaxCacheMinute()
+
+	randomDuration := rand.Intn(maxDuration-minDuration+1) + minDuration
+	expireDuration := time.Minute * time.Duration(randomDuration)
+
 	_, err = r.client.Set(ctx, key, string(bytes), expireDuration).Result()
 	return err
 }

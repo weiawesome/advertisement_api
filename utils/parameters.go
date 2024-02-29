@@ -12,6 +12,8 @@ var (
 	maxLimit           = 100
 	maxDailyRequest    = 3000
 	maxDurationRequest = 1000
+	minCacheMinute     = 15
+	maxCacheMinute     = 60
 
 	defaultOffset   = 0
 	defaultLimit    = 5
@@ -80,6 +82,12 @@ func GetMaxDailyRequest() int64 {
 }
 func GetMaxDurationRequest() int64 {
 	return int64(maxDurationRequest)
+}
+func GetMinCacheMinute() int {
+	return minCacheMinute
+}
+func GetMaxCacheMinute() int {
+	return maxCacheMinute
 }
 
 func GetDefaultOffset() int {
