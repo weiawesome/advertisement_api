@@ -6,6 +6,10 @@ import (
 )
 
 func main() {
+	utils.InitLogger()
+	utils.InitMaps()
+	utils.InitSingleFLight()
+
 	if err := utils.InitDB(); err != nil {
 		//utils.LogFatal(utils.LogData{Event: "Failed to connect to the database", User: "system", Details: err.Error()})
 		return
@@ -13,7 +17,7 @@ func main() {
 	defer func() {
 		err := utils.CloseDB()
 		if err != nil {
-			//utils.LogFatal(utils.LogData{Event: "Failed to disconnect to the database", User: "system", Details: err.Error()})
+			utils.LogFatal(err.Error())
 		}
 	}()
 	if err := utils.InitRedis(); err != nil {
@@ -23,12 +27,9 @@ func main() {
 	defer func() {
 		err := utils.CloseRedis()
 		if err != nil {
-			//utils.LogFatal(utils.LogData{Event: "Failed to disconnect to the redis", User: "system", Details: err.Error()})
+			utils.LogFatal(err.Error())
 		}
 	}()
-
-	utils.InitMaps()
-	utils.InitSingleFLight()
 
 	r := routes.InitRoutes()
 	err := r.Run()
