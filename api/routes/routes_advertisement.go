@@ -1,3 +1,9 @@
+/*
+There is initialization for the advertisement affairs.
+Including add advertisement and get advertisements.
+Lots of middleware to check content and handler with service to process the request.
+*/
+
 package routes
 
 import (
@@ -11,13 +17,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// InitAdvertisementRoutes is to initialize the advertisement routes
 func InitAdvertisementRoutes(r *gin.RouterGroup, sqlRepository *sql.Repository, redisRepository *redis.Repository) {
-	r.GET("", content_type.MiddlewareApplicationJson(),
-		getAdvertisement.MiddlewareAge(), getAdvertisement.MiddlewareCountry(),
-		getAdvertisement.MiddlewareGender(), getAdvertisement.MiddlewarePlatform(),
-		getAdvertisement.MiddlewarePaginationOffset(), getAdvertisement.MiddlewarePaginationLimit(),
-		(&advertisement.HandlerGetAdvertisement{Service: advertisementService.ServiceGetAdvertisement{SqlRepository: *sqlRepository, RedisRepository: *redisRepository}}).Handle)
-	r.POST("", content_type.MiddlewareApplicationJson(),
-		addAdvertisement.MiddlewareAddAdvertisement(),
-		(&advertisement.HandlerAddAdvertisement{Service: advertisementService.ServiceAddAdvertisement{SqlRepository: *sqlRepository}}).Handle)
+	// get method is to get the advertisements
+	r.GET("", // additional route
+		content_type.MiddlewareApplicationJson(),                               // check content-type
+		getAdvertisement.MiddlewareAge(), getAdvertisement.MiddlewareCountry(), // check age and country
+		getAdvertisement.MiddlewareGender(), getAdvertisement.MiddlewarePlatform(), // check gender and platform
+		getAdvertisement.MiddlewarePaginationOffset(), getAdvertisement.MiddlewarePaginationLimit(), // check limit and offset for pagination
+		(&advertisement.HandlerGetAdvertisement{Service: advertisementService.ServiceGetAdvertisement{SqlRepository: *sqlRepository, RedisRepository: *redisRepository}}).Handle) // handler with service to process
+
+	// post method is to add the advertisement by query content
+	r.POST("", // additional route
+		content_type.MiddlewareApplicationJson(),      // check content-type
+		addAdvertisement.MiddlewareAddAdvertisement(), // check the request-body content
+		(&advertisement.HandlerAddAdvertisement{Service: advertisementService.ServiceAddAdvertisement{SqlRepository: *sqlRepository}}).Handle) // handler with service to process
 }
