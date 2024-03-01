@@ -34,7 +34,7 @@ func MiddlewarePaginationOffset() gin.HandlerFunc {
 		var offset int
 
 		if !exists {
-			// if the parameter of offset not exist then make the age be default value
+			// if the parameter of offset not exist then make the offset be default value
 			offset = utils.GetDefaultOffset()
 		} else if len(offsets) == 0 {
 			// for the case parameter of offset supply, but it is empty.
