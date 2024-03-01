@@ -20,7 +20,7 @@ func parseOffset(offset string) (int, error) {
 
 // validate offset parameter
 func validateOffset(offset int) bool {
-	// check the offset is larger than or equal to age's minimum
+	// check the offset is larger than or equal to offset's minimum
 	return offset >= utils.GetMinOffset()
 }
 
@@ -54,7 +54,7 @@ func MiddlewarePaginationOffset() gin.HandlerFunc {
 				c.Abort()
 				return
 			}
-			// validate the age parameter
+			// validate the offset parameter
 			// to check if the value higher than or equal to minimum value
 			// if validate fail, it will return error
 			if status := validateOffset(offset); status == false {
