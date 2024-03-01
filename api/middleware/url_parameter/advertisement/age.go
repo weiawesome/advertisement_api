@@ -35,6 +35,7 @@ func MiddlewareAge() gin.HandlerFunc {
 
 		if !exists {
 			// if the parameter of age not exist then make the age be default value
+			// furthermore, it will view the query as no-constraint for the age
 			age = utils.GetDefaultAge()
 		} else if len(ages) == 0 {
 			// for the case parameter of age supply, but it is empty.
