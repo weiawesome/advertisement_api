@@ -30,6 +30,7 @@ func MiddlewareAge() gin.HandlerFunc {
 		// get all age in url parameters
 		ages, exists := c.Request.URL.Query()["age"]
 
+		// set variable of the age
 		var age int
 
 		if !exists {
