@@ -48,24 +48,16 @@ func GetVersion() string {
 	return version
 }
 
-func GetCountries() []string {
-	return countries
-}
 func GetCountriesMap() map[string]bool {
 	return countriesMap
-}
-func GetPlatforms() []string {
-	return platforms
 }
 func GetPlatformsMap() map[string]bool {
 	return platformsMap
 }
-func GetGenders() []string {
-	return genders
-}
 func GetGendersMap() map[string]bool {
 	return gendersMap
 }
+
 func GetMinAge() int {
 	return minAge
 }
