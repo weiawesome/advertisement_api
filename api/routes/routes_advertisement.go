@@ -15,7 +15,7 @@ func InitAdvertisementRoutes(r *gin.RouterGroup, sqlRepository *sql.Repository, 
 	r.GET("", content_type.MiddlewareApplicationJson(),
 		getAdvertisement.MiddlewareAge(), getAdvertisement.MiddlewareCountry(),
 		getAdvertisement.MiddlewareGender(), getAdvertisement.MiddlewarePlatform(),
-		getAdvertisement.MiddlewarePagination(),
+		getAdvertisement.MiddlewarePaginationOffset(), getAdvertisement.MiddlewarePaginationLimit(),
 		(&advertisement.HandlerGetAdvertisement{Service: advertisementService.ServiceGetAdvertisement{SqlRepository: *sqlRepository, RedisRepository: *redisRepository}}).Handle)
 	r.POST("", content_type.MiddlewareApplicationJson(),
 		addAdvertisement.MiddlewareAddAdvertisement(),
