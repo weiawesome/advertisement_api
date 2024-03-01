@@ -30,7 +30,7 @@ func (r *Repository) GetAdvertisement(Age int, Country string, Gender string, Pl
 			tx = tx.Joins("Platforms", r.db.Where(&model.PlatformCondition{PlatformCode: Platform})).Where("platform_code = ?", Platform).Or("all_platform_condition = true")
 		}
 
-		tx = tx.Offset(Offset).Limit(Limit).Find(&advertisements)
+		tx = tx.Order("end_at DESC").Offset(Offset).Limit(Limit).Find(&advertisements)
 
 		return tx.Error
 	})
