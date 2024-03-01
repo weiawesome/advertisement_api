@@ -42,7 +42,7 @@ func MiddlewareCountry() gin.HandlerFunc {
 			return
 		} else if len(countries) == 1 {
 			// validate the country parameter
-			// to check if the value is in the specified country or not
+			// to check if the value is in the specified countries or not
 			// if validate fail, it will return error
 			country = countries[0]
 			if status := validateCountry(country); status == false {
@@ -60,6 +60,7 @@ func MiddlewareCountry() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
+
 		// set the country into context and continue to next handler
 		c.Set("country", country)
 		c.Next()
