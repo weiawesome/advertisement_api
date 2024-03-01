@@ -27,13 +27,13 @@ func (m *ServiceGetAdvertisement) Get(Key string, Age int, Country string, Gende
 			utils.GetSingleFlight().Forget(Key)
 		}()
 		if err == nil {
-			go utils.LogInfo("Hit cache")
+			go utils.LogInfo("Cache hit")
 			return response, nil
 		} else {
-			go utils.LogInfo("Not hit cache")
+			go utils.LogInfo("Cache miss")
 			advertisements, err := m.SqlRepository.GetAdvertisement(Age, Country, Gender, Platform, Offset, Limit)
 			if err != nil {
-				return nil, err
+				return response, err
 			}
 			for _, ad := range advertisements {
 				result.Items = append(result.Items, advertisement.Item{Title: ad.Title, EndAt: ad.EndAt})
