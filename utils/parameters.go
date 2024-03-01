@@ -10,6 +10,7 @@ var (
 	maxAge             = 100
 	minLimit           = 1
 	maxLimit           = 100
+	minOffset          = 0
 	maxDailyRequest    = 3000
 	maxDurationRequest = 1000
 	minCacheMinute     = 15
@@ -76,6 +77,9 @@ func GetMinLimit() int {
 }
 func GetMaxLimit() int {
 	return maxLimit
+}
+func GetMinOffset() int {
+	return minOffset
 }
 func GetMaxDailyRequest() int64 {
 	return int64(maxDailyRequest)
