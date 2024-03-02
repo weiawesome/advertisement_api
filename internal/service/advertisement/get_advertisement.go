@@ -15,14 +15,23 @@ import (
 	"time"
 )
 
-// ServiceGetAdvertisement is the service to get advertisements
-type ServiceGetAdvertisement struct {
+// ServiceGetAdvertisement is the interface of the getting advertisements service
+type ServiceGetAdvertisement interface {
+	Get(Key string, Age int, Country string, Gender string, Platform string, Offset int, Limit int) (advertisement.GetAdvertisementResponse, error)
+}
+
+// getService is the service to get advertisements
+type getService struct {
 	SqlRepository   sql.Repository   // the repository to interact with sql database
 	RedisRepository redis.Repository // the repository to handle cache
 }
 
+func NewGetAdvertisementService(s *sql.Repository, r *redis.Repository) ServiceGetAdvertisement {
+	return &getService{SqlRepository: *s, RedisRepository: *r}
+}
+
 // Get is to get the content from handler and query advertisements by sql and redis repository
-func (m *ServiceGetAdvertisement) Get(Key string, Age int, Country string, Gender string, Platform string, Offset int, Limit int) (advertisement.GetAdvertisementResponse, error) {
+func (m *getService) Get(Key string, Age int, Country string, Gender string, Platform string, Offset int, Limit int) (advertisement.GetAdvertisementResponse, error) {
 	// get the context and set limit of waiting time
 	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
 	defer cancel()
