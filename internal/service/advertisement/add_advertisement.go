@@ -21,6 +21,7 @@ type addService struct {
 	SqlRepository sql.Repository // the repository to interact with sql database
 }
 
+// NewAddAdvertisementService is the contractor for the addService
 func NewAddAdvertisementService(r *sql.Repository) ServiceAddAdvertisement {
 	return &addService{SqlRepository: *r}
 }

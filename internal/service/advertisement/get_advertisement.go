@@ -26,6 +26,7 @@ type getService struct {
 	RedisRepository redis.Repository // the repository to handle cache
 }
 
+// NewGetAdvertisementService is the contractor for the getService
 func NewGetAdvertisementService(s *sql.Repository, r *redis.Repository) ServiceGetAdvertisement {
 	return &getService{SqlRepository: *s, RedisRepository: *r}
 }
