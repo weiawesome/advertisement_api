@@ -25,11 +25,15 @@ func InitAdvertisementRoutes(r *gin.RouterGroup, sqlRepository *sql.Repository, 
 		getAdvertisement.MiddlewareAge(), getAdvertisement.MiddlewareCountry(), // check age and country
 		getAdvertisement.MiddlewareGender(), getAdvertisement.MiddlewarePlatform(), // check gender and platform
 		getAdvertisement.MiddlewarePaginationOffset(), getAdvertisement.MiddlewarePaginationLimit(), // check limit and offset for pagination
-		(&advertisement.HandlerGetAdvertisement{Service: advertisementService.ServiceGetAdvertisement{SqlRepository: *sqlRepository, RedisRepository: *redisRepository}}).Handle) // handler with service to process
+		(&advertisement.HandlerGetAdvertisement{
+			Service: advertisementService.NewGetAdvertisementService(sqlRepository, redisRepository),
+		}).Handle) // handler with service to process
 
 	// post method is to add the advertisement by query content
 	r.POST("", // additional route
 		content_type.MiddlewareApplicationJson(),      // check content-type
 		addAdvertisement.MiddlewareAddAdvertisement(), // check the request-body content
-		(&advertisement.HandlerAddAdvertisement{Service: advertisementService.ServiceAddAdvertisement{SqlRepository: *sqlRepository}}).Handle) // handler with service to process
+		(&advertisement.HandlerAddAdvertisement{
+			Service: advertisementService.NewAddAdvertisementService(sqlRepository),
+		}).Handle) // handler with service to process
 }
