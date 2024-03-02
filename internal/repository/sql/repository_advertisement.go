@@ -72,12 +72,12 @@ func (r *Repository) AddAdvertisement(data advertisement.AddAdvertisementRequest
 			return err
 		}
 		// check the number of the adding advertisement in duration has been exceeded limit or not
-		if err := checkDurationLimit(tx, data.StartAt, data.EndAt, true); err != nil {
+		if err := checkDurationLimit(tx, *data.StartAt, *data.EndAt, true); err != nil {
 			return err
 		}
 
 		// make the advertisement with the query's content
-		ad := model.Advertisement{Title: *data.Title, StartAt: data.StartAt, EndAt: data.EndAt, CreatedAt: today}
+		ad := model.Advertisement{Title: *data.Title, StartAt: *data.StartAt, EndAt: *data.EndAt, CreatedAt: today}
 
 		// fill about country condition
 		if data.Conditions.Country == nil {
@@ -135,7 +135,7 @@ func (r *Repository) AddAdvertisement(data advertisement.AddAdvertisementRequest
 			return err
 		}
 		// check again about duration limit, but the number can equal to the limitation.
-		if err := checkDurationLimit(tx, data.StartAt, data.EndAt, false); err != nil {
+		if err := checkDurationLimit(tx, *data.StartAt, *data.EndAt, false); err != nil {
 			return err
 		}
 

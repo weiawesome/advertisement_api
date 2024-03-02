@@ -8,10 +8,10 @@ import "time"
 
 // AddAdvertisementRequest that the request body to add advertisement
 type AddAdvertisementRequest struct {
-	Title      *string   `json:"title"`      //the advertisement's title
-	StartAt    time.Time `json:"startAt"`    // the advertisement's start time
-	EndAt      time.Time `json:"endAt"`      // the advertisement's end time
-	Conditions Condition `json:"conditions"` // the advertisement's other condition
+	Title      *string    `json:"title"`      //the advertisement's title
+	StartAt    *time.Time `json:"startAt"`    // the advertisement's start time
+	EndAt      *time.Time `json:"endAt"`      // the advertisement's end time
+	Conditions Condition  `json:"conditions"` // the advertisement's other condition
 }
 
 // Condition that is advertisement's additional constraint

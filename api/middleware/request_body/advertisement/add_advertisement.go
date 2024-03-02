@@ -19,7 +19,13 @@ import (
 // for example, genders = { "M" , "F" } then GendersMap = { "M" : true, "F" : true }
 // hence, it can easily to check whether element is in the set or not.
 func isSubSet(childSet []string, parentMap map[string]bool) bool {
+	// if child set is nil (without supply) then return true
+	if childSet == nil {
+		return true
+	}
+
 	var result, val bool
+	existMap := make(map[string]bool)
 
 	// enumerate all the element check the value
 	for _, child := range childSet {
@@ -27,15 +33,18 @@ func isSubSet(childSet []string, parentMap map[string]bool) bool {
 
 		// if it not exists in map or its value is false then return false
 		if (!val) || (!result) {
-			return result
+			return false
 		}
 
-		// to check the element will not exist twice or more
-		parentMap[child] = false
+		// if the value has been appeared, then return false
+		if exist, _ := existMap[child]; exist == true {
+			return false
+		}
+		existMap[child] = true
 	}
 
 	// it is subset in the specified set then return true
-	return result
+	return true
 }
 
 // validate condition in the add advertisement request
@@ -43,16 +52,16 @@ func validateCondition(data advertisement.AddAdvertisementRequest) error {
 	if (data.Conditions.AgeStart == nil) != (data.Conditions.AgeEnd == nil) {
 		// AgeStart and AgeEnd just only supply one
 		return errors.New("age limit must be a pair")
-	} else if *data.Conditions.AgeStart > *data.Conditions.AgeEnd {
+	} else if data.Conditions.AgeStart != nil && data.Conditions.AgeEnd != nil && (*data.Conditions.AgeStart > *data.Conditions.AgeEnd) {
 		// AgeStart larger than AgeEnd
 		return errors.New("age limit is illegal")
-	} else if data.Conditions.Gender != nil && !isSubSet(data.Conditions.Gender, utils.GetGendersMap()) {
+	} else if !isSubSet(data.Conditions.Gender, utils.GetGendersMap()) {
 		// the gender is not in specified gender set
 		return errors.New("invalid gender")
-	} else if data.Conditions.Platform != nil && !isSubSet(data.Conditions.Platform, utils.GetPlatformsMap()) {
+	} else if !isSubSet(data.Conditions.Platform, utils.GetPlatformsMap()) {
 		// the platform is not in specified platform set
 		return errors.New("invalid platform")
-	} else if data.Conditions.Country != nil && !isSubSet(data.Conditions.Country, utils.GetCountriesMap()) {
+	} else if !isSubSet(data.Conditions.Country, utils.GetCountriesMap()) {
 		// the country is not in specified country set
 		return errors.New("invalid country")
 	}
@@ -62,10 +71,10 @@ func validateCondition(data advertisement.AddAdvertisementRequest) error {
 
 // to validate basic information in the request (all information in here is required)
 func validateBasicInfo(data advertisement.AddAdvertisementRequest) error {
-	if data.StartAt.IsZero() || data.EndAt.IsZero() {
+	if data.StartAt == nil || data.EndAt == nil {
 		// lack of StartAt or EndAt
 		return errors.New("startAt and endAt parameter is required")
-	} else if data.EndAt.Before(data.StartAt) || data.EndAt.Equal(data.StartAt) {
+	} else if (*data.EndAt).Before(*data.StartAt) || (*data.EndAt).Equal(*data.StartAt) {
 		// EndAt is before or equal to StartAt
 		return errors.New("endAt can't be before or equal to startAt")
 	} else if data.Title == nil {
