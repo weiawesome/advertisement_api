@@ -15,7 +15,7 @@ import (
 )
 
 // GetAdvertisement is to get advertisements with different condition like age, gender, platform, country etc.
-func (r *Repository) GetAdvertisement(Age int, Country string, Gender string, Platform string, Offset int, Limit int) ([]model.Advertisement, error) {
+func (r *repository) GetAdvertisement(Age int, Country string, Gender string, Platform string, Offset int, Limit int) ([]model.Advertisement, error) {
 	// declare a variable for the result
 	var advertisements []model.Advertisement
 
@@ -60,7 +60,7 @@ func (r *Repository) GetAdvertisement(Age int, Country string, Gender string, Pl
 }
 
 // AddAdvertisement is to add advertisement with specific information.
-func (r *Repository) AddAdvertisement(data advertisement.AddAdvertisementRequest) error {
+func (r *repository) AddAdvertisement(data advertisement.AddAdvertisementRequest) error {
 	// start a transaction to ensure database correctness
 	// when any of the action fail, the database will roll bak automatically.
 	err := r.db.Transaction(func(tx *gorm.DB) error {
