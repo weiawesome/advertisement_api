@@ -11,8 +11,8 @@ import singleflight "golang.org/x/sync/singleflight"
 // the singleflight instance
 var gsf *singleflight.Group
 
-// InitSingleFLight is the function of initialization singleflight
-func InitSingleFLight() {
+// InitSingleFlight is the function of initialization singleflight
+func InitSingleFlight() {
 	gsf = &singleflight.Group{}
 }
 

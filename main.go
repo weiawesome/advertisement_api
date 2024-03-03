@@ -19,7 +19,7 @@ func main() {
 	utils.InitMaps()
 
 	// initialize the singleflight instance
-	utils.InitSingleFLight()
+	utils.InitSingleFlight()
 
 	// initialize the sql-db connection. return and log error when connect fail.
 	if err := utils.InitDB(); err != nil {
