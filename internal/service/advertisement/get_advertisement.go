@@ -67,10 +67,11 @@ func (m *getService) Get(Key string, Age int, Country string, Gender string, Pla
 				return response, err
 			}
 
+			result.Items = make([]advertisement.Item, len(advertisements))
 			// enumerate the result
-			for _, ad := range advertisements {
+			for i, ad := range advertisements {
 				// add each advertisement's information into result
-				result.Items = append(result.Items, advertisement.Item{Title: ad.Title, EndAt: ad.EndAt})
+				result.Items[i] = advertisement.Item{Title: ad.Title, EndAt: ad.EndAt}
 			}
 
 			// use another goroutine to set the cache. if failed, then log its error.
