@@ -8,12 +8,18 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"path/filepath"
+	"runtime"
 )
 
 // InitAPIDocsRoutes is to initialize the api document route
 func InitAPIDocsRoutes(r *gin.RouterGroup) {
+	// get the current file's path
+	_, currentFile, _, _ := runtime.Caller(0)
+	basePath := filepath.Dir(currentFile)
+
 	// set the static file in route
-	r.StaticFile("/api_specification.yaml", "assets/docs/api_specification.yaml")
+	r.StaticFile("/api_specification.yaml", filepath.Join(basePath, "../../assets/docs/api_specification.yaml"))
 
 	// set the route to manifest the OpenAPI(SWAGGER)
 	r.GET("", func(c *gin.Context) {
