@@ -140,6 +140,11 @@ func uploadRotatedLogsToInfluxDB(influxClient influxdb2.Client) {
 
 // get the specific content in the log file's content
 func getField(line, field string) string {
+	// when field not exist
+	if !strings.Contains(line, field) {
+		return ""
+	}
+
 	// get the start of the specific tag
 	start := strings.Index(line, `"`+field+`":"`) + len(field) + 4
 
