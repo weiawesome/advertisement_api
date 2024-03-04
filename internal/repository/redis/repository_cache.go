@@ -15,7 +15,7 @@ import (
 )
 
 // SaveCache is to save the cache value
-func (r *Repository) SaveCache(key string, value advertisement.GetAdvertisementResponse) error {
+func (r *repository) SaveCache(key string, value advertisement.GetAdvertisementResponse) error {
 	// get the context background
 	ctx := context.Background()
 
@@ -39,7 +39,7 @@ func (r *Repository) SaveCache(key string, value advertisement.GetAdvertisementR
 }
 
 // LoadCache is to load the cache with specified key
-func (r *Repository) LoadCache(key string) (advertisement.GetAdvertisementResponse, error) {
+func (r *repository) LoadCache(key string) (advertisement.GetAdvertisementResponse, error) {
 	// declare a variable for the response
 	var response advertisement.GetAdvertisementResponse
 
