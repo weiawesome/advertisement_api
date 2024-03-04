@@ -9,11 +9,13 @@ import (
 	"advertisement_api/internal/repository/model"
 	"errors"
 	"github.com/stretchr/testify/mock"
+	"time"
 )
 
 const (
-	NormalCase = "Normal case"
-	ErrorCase  = "Error case"
+	NormalCase    = "Normal case"
+	ErrorCase     = "Error case"
+	TimeLimitCase = "Time limit case"
 )
 
 type RepositoryMock struct {
@@ -25,8 +27,11 @@ func (r *RepositoryMock) GetAdvertisement(Age int, Country string, Gender string
 		return []model.Advertisement{{Title: NormalCase}}, nil
 	} else if Country == ErrorCase {
 		return []model.Advertisement{}, errors.New("error with " + ErrorCase)
+	} else if Country == TimeLimitCase {
+		time.Sleep(time.Second * 10)
+		return []model.Advertisement{}, errors.New("error with " + ErrorCase)
 	}
-	return []model.Advertisement{}, errors.New("error with " + ErrorCase)
+	return []model.Advertisement{}, nil
 }
 
 func (r *RepositoryMock) AddAdvertisement(data advertisement.AddAdvertisementRequest) error {
@@ -35,5 +40,5 @@ func (r *RepositoryMock) AddAdvertisement(data advertisement.AddAdvertisementReq
 	} else if *data.Title == ErrorCase {
 		return errors.New("error with " + ErrorCase)
 	}
-	return errors.New("error with " + ErrorCase)
+	return nil
 }
