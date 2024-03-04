@@ -274,6 +274,14 @@ var (
 				EndAt:   nil,
 			},
 		},
+		{
+			testName: "Error case with time logic error",
+			advertisement: advertisement.AddAdvertisementRequest{
+				Title:   func(s string) *string { return &s }("Correct case's title"),
+				StartAt: func(t time.Time) *time.Time { return &t }(time.Now().UTC().Add(time.Hour * 10)),
+				EndAt:   func(t time.Time) *time.Time { return &t }(time.Now().UTC()),
+			},
+		},
 	}
 )
 
@@ -333,6 +341,21 @@ func TestMiddlewareAddAdvertisement(t *testing.T) {
 	utils.InitMaps()
 
 	gin.SetMode(gin.TestMode)
+
+	t.Run("Error case json not bind", func(t *testing.T) {
+		router := gin.New()
+		router.Use(MiddlewareAddAdvertisement())
+		router.POST("/test", func(c *gin.Context) {
+			c.String(http.StatusOK, "Passed")
+		})
+
+		w := httptest.NewRecorder()
+		req, _ := http.NewRequest("POST", "/test", nil)
+
+		router.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusBadRequest, w.Code)
+	})
 
 	for _, basicInfoCase := range rightValidateBasicInfoCases {
 		for _, conditionCase := range rightValidateConditionCases {
