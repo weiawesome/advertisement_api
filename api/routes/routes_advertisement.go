@@ -18,7 +18,7 @@ import (
 )
 
 // InitAdvertisementRoutes is to initialize the advertisement routes
-func InitAdvertisementRoutes(r *gin.RouterGroup, sqlRepository *sql.Repository, redisRepository *redis.Repository) {
+func InitAdvertisementRoutes(r *gin.RouterGroup, sqlRepository sql.Repository, redisRepository redis.Repository) {
 	// get method is to get the advertisements
 	r.GET("", // additional route
 		content_type.MiddlewareApplicationJson(),                               // check content-type
