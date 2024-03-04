@@ -32,14 +32,6 @@ func MiddlewareCountry() gin.HandlerFunc {
 			// if the parameter of country not exist then make the country be default value
 			// furthermore, it will view the query as no-constraint for the country
 			country = utils.GetDefaultCountry()
-		} else if len(countries) == 0 {
-			// for the case parameter of country supply, but it is empty.
-			// for example, http://{HOST}/api/v1/ad?country=&offset=3
-			// then the countries will be [] (error case)
-			e := failure.ClientError{Reason: "country's parameter error, value empty error"}
-			c.JSON(http.StatusBadRequest, e)
-			c.Abort()
-			return
 		} else if len(countries) == 1 {
 			// validate the country parameter
 			// to check if the value is in the specified countries or not

@@ -80,7 +80,7 @@ func TestMiddlewarePlatform(t *testing.T) {
 	for _, platformCase := range rightPlatformCases {
 		t.Run(platformCase.testName, func(t *testing.T) {
 			router := gin.New()
-			router.Use(MiddlewareAge())
+			router.Use(MiddlewarePlatform())
 			router.GET("/test", func(c *gin.Context) {
 				c.String(http.StatusOK, "Passed")
 			})

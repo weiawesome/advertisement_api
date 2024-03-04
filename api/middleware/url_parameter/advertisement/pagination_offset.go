@@ -36,14 +36,6 @@ func MiddlewarePaginationOffset() gin.HandlerFunc {
 		if !exists {
 			// if the parameter of offset not exist then make the offset be default value
 			offset = utils.GetDefaultOffset()
-		} else if len(offsets) == 0 {
-			// for the case parameter of offset supply, but it is empty.
-			// for example, http://{HOST}/api/v1/ad?offset=&age=5
-			// then the offsets will be [] (error case)
-			e := failure.ClientError{Reason: "offset's parameter error, value empty error"}
-			c.JSON(http.StatusBadRequest, e)
-			c.Abort()
-			return
 		} else if len(offsets) == 1 {
 			// parse the offset parameter if parse error, it will return error's reason
 			offsetInt, err := parseOffset(offsets[0])

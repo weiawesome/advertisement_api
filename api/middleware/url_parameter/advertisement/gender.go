@@ -32,14 +32,6 @@ func MiddlewareGender() gin.HandlerFunc {
 			// if the parameter of gender not exist then make the gender be default value
 			// furthermore, it will view the query as no-constraint for the gender
 			gender = utils.GetDefaultGender()
-		} else if len(genders) == 0 {
-			// for the case parameter of gender supply, but it is empty.
-			// for example, http://{HOST}/api/v1/ad?gender=&country=TW
-			// then the genders will be [] (error case)
-			e := failure.ClientError{Reason: "gender's parameter error, value empty error"}
-			c.JSON(http.StatusBadRequest, e)
-			c.Abort()
-			return
 		} else if len(genders) == 1 {
 			// validate the gender parameter
 			// to check if the value is in the specified genders or not

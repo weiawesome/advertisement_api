@@ -78,7 +78,7 @@ func TestMiddlewareCountry(t *testing.T) {
 	for _, countryCase := range rightCountryCases {
 		t.Run(countryCase.testName, func(t *testing.T) {
 			router := gin.New()
-			router.Use(MiddlewareAge())
+			router.Use(MiddlewareCountry())
 			router.GET("/test", func(c *gin.Context) {
 				c.String(http.StatusOK, "Passed")
 			})

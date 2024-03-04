@@ -77,7 +77,7 @@ func TestMiddlewareGender(t *testing.T) {
 	for _, genderCase := range rightGenderCases {
 		t.Run(genderCase.testName, func(t *testing.T) {
 			router := gin.New()
-			router.Use(MiddlewareAge())
+			router.Use(MiddlewareGender())
 			router.GET("/test", func(c *gin.Context) {
 				c.String(http.StatusOK, "Passed")
 			})

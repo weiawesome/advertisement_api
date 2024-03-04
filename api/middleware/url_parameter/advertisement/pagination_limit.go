@@ -36,14 +36,6 @@ func MiddlewarePaginationLimit() gin.HandlerFunc {
 		if !exists {
 			// if the parameter of limit not exist then make the limit be default value
 			limit = utils.GetDefaultLimit()
-		} else if len(limits) == 0 {
-			// for the case parameter of limit supply, but it is empty.
-			// for example, http://{HOST}/api/v1/ad?limit=&platform=ios
-			// then the limits will be [] (error case)
-			e := failure.ClientError{Reason: "limit's parameter error, value empty error"}
-			c.JSON(http.StatusBadRequest, e)
-			c.Abort()
-			return
 		} else if len(limits) == 1 {
 			// parse the limit parameter if parse error, it will return error's reason
 			limitInt, err := parseLimit(limits[0])

@@ -37,14 +37,6 @@ func MiddlewareAge() gin.HandlerFunc {
 			// if the parameter of age not exist then make the age be default value
 			// furthermore, it will view the query as no-constraint for the age
 			age = utils.GetDefaultAge()
-		} else if len(ages) == 0 {
-			// for the case parameter of age supply, but it is empty.
-			// for example, http://{HOST}/api/v1/ad?age=&platform=ios
-			// then the ages will be [] (error case)
-			e := failure.ClientError{Reason: "age's parameter error, value empty error"}
-			c.JSON(http.StatusBadRequest, e)
-			c.Abort()
-			return
 		} else if len(ages) == 1 {
 			// parse the age parameter if parse error, it will return error's reason
 			ageInt, err := parseAge(ages[0])

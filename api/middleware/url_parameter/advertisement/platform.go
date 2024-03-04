@@ -32,14 +32,6 @@ func MiddlewarePlatform() gin.HandlerFunc {
 			// if the parameter of platform not exist then make the platform be default value
 			// furthermore, it will view the query as no-constraint for the platform
 			platform = utils.GetDefaultPlatform()
-		} else if len(platforms) == 0 {
-			// for the case parameter of platform supply, but it is empty.
-			// for example, http://{HOST}/api/v1/ad?platform=&gender=M
-			// then the platforms will be [] (error case)
-			e := failure.ClientError{Reason: "platform's parameter error, value empty error"}
-			c.JSON(http.StatusBadRequest, e)
-			c.Abort()
-			return
 		} else if len(platforms) == 1 {
 			// validate the platform parameter
 			// to check if the value is in the specified platforms or not
