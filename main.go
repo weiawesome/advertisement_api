@@ -7,6 +7,8 @@ package main
 
 import (
 	"advertisement_api/api/routes"
+	"advertisement_api/internal/repository/redis"
+	"advertisement_api/internal/repository/sql"
 	"advertisement_api/utils"
 	"github.com/gin-gonic/gin"
 )
@@ -50,8 +52,13 @@ func main() {
 	// set mode to the release mode.
 	gin.SetMode(gin.ReleaseMode)
 
+	// new a sql repository
+	sqlRepository := sql.NewRepository()
+	// new a redis repository
+	redisRepository := redis.NewRepository()
+
 	// initialize all the routes in the server.
-	r := routes.InitRoutes()
+	r := routes.InitRoutes(sqlRepository, redisRepository)
 	// start the service. log error when start fail.
 	err := r.Run()
 	if err != nil {
