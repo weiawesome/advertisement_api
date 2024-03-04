@@ -7,6 +7,7 @@ package utils
 
 import (
 	"github.com/stretchr/testify/assert"
+	"os"
 	"testing"
 )
 
@@ -63,6 +64,21 @@ func TestEnvRedisDb(t *testing.T) {
 func TestEnvInfluxDbAddress(t *testing.T) {
 	t.Run("Case of EnvInfluxDbAddress", func(t *testing.T) {
 		assert.Equal(t, EnvInfluxDbAddress(), "http://"+defaultInfluxDbHost+":"+defaultInfluxDbPort)
+	})
+	t.Run("Case of EnvInfluxDbAddress", func(t *testing.T) {
+		hostCase := "Test Influxdb Host"
+		err := os.Setenv("INFLUXDB_HOST", hostCase)
+		if err != nil {
+			t.Errorf("set env for influxdb host error " + err.Error())
+			return
+		}
+		assert.Equal(t, EnvInfluxDbAddress(), "http://"+hostCase+":"+defaultInfluxDbPort)
+		err = os.Unsetenv("INFLUXDB_HOST")
+		if err != nil {
+			t.Errorf("set env for influxdb host error " + err.Error())
+			return
+		}
+
 	})
 }
 
