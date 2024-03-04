@@ -14,6 +14,15 @@ import (
 	"testing"
 )
 
+func TestNewGetAdvertisementService(t *testing.T) {
+	t.Run("Case right", func(t *testing.T) {
+		sqlRepository := sql.RepositoryMock{}
+		redisRepository := redis.RepositoryMock{}
+		service := NewGetAdvertisementService(&sqlRepository, &redisRepository)
+		assert.NotNil(t, service)
+	})
+}
+
 // Get is to get the content from handler and query advertisements by sql and redis repository
 func TestGet(t *testing.T) {
 	utils.InitSingleFlight()
@@ -45,12 +54,20 @@ func TestGet(t *testing.T) {
 		_, err := service.Get(redis.CacheMissCase, 0, sql.ErrorCase, "M", "ios", 0, 10)
 		assert.Equal(t, "error with "+sql.ErrorCase, err.Error())
 	})
-	t.Run("Case error", func(t *testing.T) {
+	t.Run("Case error with cache write back error", func(t *testing.T) {
 		sqlRepository := sql.RepositoryMock{}
 		redisRepository := redis.RepositoryMock{}
 		service := getService{SqlRepository: &sqlRepository, RedisRepository: &redisRepository}
 
 		_, err := service.Get(redis.CacheNormalCase, 0, sql.ErrorCase, "M", "ios", 0, 10)
 		assert.Equal(t, "error with "+sql.ErrorCase, err.Error())
+	})
+	t.Run("Case error with time limit", func(t *testing.T) {
+		sqlRepository := sql.RepositoryMock{}
+		redisRepository := redis.RepositoryMock{}
+		service := getService{SqlRepository: &sqlRepository, RedisRepository: &redisRepository}
+
+		_, err := service.Get(redis.CacheNormalCase, 0, sql.TimeLimitCase, "M", "ios", 0, 10)
+		assert.NotNil(t, err)
 	})
 }

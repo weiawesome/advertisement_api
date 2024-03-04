@@ -22,8 +22,8 @@ type addService struct {
 }
 
 // NewAddAdvertisementService is the contractor for the addService
-func NewAddAdvertisementService(r *sql.Repository) ServiceAddAdvertisement {
-	return &addService{SqlRepository: *r}
+func NewAddAdvertisementService(r sql.Repository) ServiceAddAdvertisement {
+	return &addService{SqlRepository: r}
 }
 
 // Add is to get the content from handler and add advertisement by sql repository

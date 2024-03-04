@@ -27,8 +27,8 @@ type getService struct {
 }
 
 // NewGetAdvertisementService is the contractor for the getService
-func NewGetAdvertisementService(s *sql.Repository, r *redis.Repository) ServiceGetAdvertisement {
-	return &getService{SqlRepository: *s, RedisRepository: *r}
+func NewGetAdvertisementService(s sql.Repository, r redis.Repository) ServiceGetAdvertisement {
+	return &getService{SqlRepository: s, RedisRepository: r}
 }
 
 // Get is to get the content from handler and query advertisements by sql and redis repository
