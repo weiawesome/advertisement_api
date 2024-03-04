@@ -55,7 +55,6 @@ var (
 	contentTypeRightCase = "application/json"
 )
 
-// InitAdvertisementRoutes is to initialize the advertisement routes
 func TestInitAdvertisementRoutes(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	utils.InitMaps()

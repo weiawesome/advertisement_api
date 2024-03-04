@@ -1,7 +1,3 @@
-/*
-This is a tool to get the full url including parameter in query
-*/
-
 package utils
 
 import (
@@ -25,7 +21,6 @@ var (
 	}
 )
 
-// GetFullUrl is to get the full url and all query's parameters
 func TestGetFullUrl(t *testing.T) {
 
 	for _, testCase := range testCases {

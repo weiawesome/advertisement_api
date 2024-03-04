@@ -20,7 +20,6 @@ func TestNewAddAdvertisementService(t *testing.T) {
 	})
 }
 
-// Add is to get the content from handler and add advertisement by sql repository
 func TestAdd(t *testing.T) {
 	t.Run("Case right", func(t *testing.T) {
 		sqlRepository := sql.RepositoryMock{}

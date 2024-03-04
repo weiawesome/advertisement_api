@@ -1,9 +1,3 @@
-/*
-The handler with service to handle about add advertisement.
-At first, it will get value form context then throw the value to the service.
-Finally, according to the value rerun from service then return different response to the client.
-*/
-
 package advertisement
 
 import (
@@ -25,7 +19,6 @@ var (
 	unknownErrorCase  = advertisement2.AddAdvertisementRequest{Title: func(s string) *string { return &s }(advertisement.UnknownErrorTitleMock)}
 )
 
-// Handle to handle the request about adding advertisement
 func TestAddAdvertisementHandle(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 

@@ -1,7 +1,3 @@
-/*
-The middleware of gin to validate and parse parameter in url about country
-*/
-
 package advertisement
 
 import (
@@ -36,7 +32,6 @@ var (
 	}
 )
 
-// validate country parameter
 func TestValidateCountry(t *testing.T) {
 	utils.InitMaps()
 	for _, countryCase := range rightValidateCountryCases {
@@ -55,7 +50,6 @@ func TestValidateCountry(t *testing.T) {
 	}
 }
 
-// MiddlewareCountry is to validate and parse the country parameter in url
 func TestMiddlewareCountry(t *testing.T) {
 	utils.InitMaps()
 	for _, countryCase := range rightValidateCountryCases {

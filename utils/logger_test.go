@@ -1,10 +1,3 @@
-/*
-The realize of logger make other file easy to use.
-There is initialization of logger instance.
-It save the logs into local when connection to influxdb fail. when connection of influx recover, it will write back all logs.
-Supply all function to log including debug, info, warn, error, fatal, panic.
-*/
-
 package utils
 
 import (
@@ -69,7 +62,8 @@ var (
 	}
 )
 
-// get the specific content in the log file's content
+const testMessage = "test message"
+
 func TestGetField(t *testing.T) {
 	for _, lc := range logCases {
 		t.Run(lc.name, func(t *testing.T) {
@@ -79,7 +73,6 @@ func TestGetField(t *testing.T) {
 	}
 }
 
-// parse the time in the log file's content
 func TestParseTime(t *testing.T) {
 	for _, trc := range timeRightCases {
 		t.Run(trc.name, func(t *testing.T) {
@@ -95,8 +88,6 @@ func TestParseTime(t *testing.T) {
 	}
 }
 
-const testMessage = "test message"
-
 func TestLogDebug(t *testing.T) {
 	t.Run("Case for debug log", func(t *testing.T) {
 		var buf bytes.Buffer
@@ -110,7 +101,6 @@ func TestLogDebug(t *testing.T) {
 	})
 }
 
-// LogInfo is to log basic information
 func TestLogInfo(t *testing.T) {
 	t.Run("Case for info log", func(t *testing.T) {
 		var buf bytes.Buffer
@@ -124,7 +114,6 @@ func TestLogInfo(t *testing.T) {
 	})
 }
 
-// LogWarn is to log warning information need to focus
 func TestLogWarn(t *testing.T) {
 	t.Run("Case for warn log", func(t *testing.T) {
 		var buf bytes.Buffer
@@ -138,7 +127,6 @@ func TestLogWarn(t *testing.T) {
 	})
 }
 
-// LogError is to log error information when unknown error happened
 func TestLogError(t *testing.T) {
 	t.Run("Case for error log", func(t *testing.T) {
 		var buf bytes.Buffer
@@ -152,7 +140,6 @@ func TestLogError(t *testing.T) {
 	})
 }
 
-// LogPanic is to log panic information when the error is more serious than fatal
 func TestLogPanic(t *testing.T) {
 	t.Run("Case for panic log", func(t *testing.T) {
 		var buf bytes.Buffer
@@ -160,13 +147,12 @@ func TestLogPanic(t *testing.T) {
 
 		defer func() {
 			if r := recover(); r != nil {
-				// Recover from panic to allow the test to continue and check the log output
 				if !strings.Contains(buf.String(), testMessage) {
 					t.Errorf("LogPanic did not log the expected message")
 				}
 			}
 		}()
 
-		LogPanic("test message") // 假設這會引發 panic
+		LogPanic(testMessage)
 	})
 }

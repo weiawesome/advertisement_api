@@ -1,7 +1,3 @@
-/*
-This is a tool to take the value from context and assert its type
-*/
-
 package utils
 
 import (

@@ -35,7 +35,6 @@ var (
 	}
 )
 
-// validate gender parameter
 func TestValidateGender(t *testing.T) {
 	utils.InitMaps()
 	for _, genderCase := range rightValidateGenderCases {
@@ -54,7 +53,6 @@ func TestValidateGender(t *testing.T) {
 	}
 }
 
-// MiddlewareGender is to validate and parse the gender parameter in url
 func TestMiddlewareGender(t *testing.T) {
 	utils.InitMaps()
 	for _, genderCase := range rightValidateGenderCases {

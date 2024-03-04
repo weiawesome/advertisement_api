@@ -1,7 +1,3 @@
-/*
-The middleware of gin to validate and parse parameter in url about limit
-*/
-
 package advertisement
 
 import (
@@ -90,7 +86,6 @@ var (
 	}
 )
 
-// parse limit parameter
 func TestParseLimit(t *testing.T) {
 	for _, limitCase := range rightParseLimitCases {
 		t.Run(limitCase.testName, func(t *testing.T) {
@@ -108,7 +103,6 @@ func TestParseLimit(t *testing.T) {
 	}
 }
 
-// validate limit parameter
 func TestValidateLimit(t *testing.T) {
 	for _, limitCase := range rightValidateLimitCases {
 		t.Run(limitCase.testName, func(t *testing.T) {
@@ -126,7 +120,6 @@ func TestValidateLimit(t *testing.T) {
 	}
 }
 
-// MiddlewarePaginationLimit is to validate and parse the limit parameter in url
 func TestMiddlewarePaginationLimit(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 

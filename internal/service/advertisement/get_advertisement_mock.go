@@ -1,8 +1,3 @@
-/*
-The service for adding advertisement.
-It has sql repository to realize interaction with database.
-*/
-
 package advertisement
 
 import (
@@ -20,7 +15,6 @@ type GetAdvertisementServiceMock struct {
 	mock.Mock
 }
 
-// Add is to get the content from handler and add advertisement by sql repository
 func (m *GetAdvertisementServiceMock) Get(Key string, Age int, Country string, Gender string, Platform string, Offset int, Limit int) (advertisementResponse.GetAdvertisementResponse, error) {
 	var result advertisementResponse.GetAdvertisementResponse
 

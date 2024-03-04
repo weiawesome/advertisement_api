@@ -1,7 +1,3 @@
-/*
-The repository for the redis.
-*/
-
 package redis
 
 import (

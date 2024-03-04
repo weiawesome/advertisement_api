@@ -1,9 +1,3 @@
-/*
-The service for getting advertisements.
-It has sql repository to realize interaction with database.
-Furthermore, redis repository to get and set the cache.
-*/
-
 package advertisement
 
 import (
@@ -23,7 +17,6 @@ func TestNewGetAdvertisementService(t *testing.T) {
 	})
 }
 
-// Get is to get the content from handler and query advertisements by sql and redis repository
 func TestGet(t *testing.T) {
 	utils.InitSingleFlight()
 	t.Run("Case right (Cache hit)", func(t *testing.T) {

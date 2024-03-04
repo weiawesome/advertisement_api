@@ -1,7 +1,3 @@
-/*
-Some tools including getting today, getting location dsn setting.
-*/
-
 package utils
 
 import (
@@ -12,7 +8,6 @@ import (
 	"time"
 )
 
-// GetToday is a function to get today's date
 func TestGetToday(t *testing.T) {
 	t.Run("Case get today", func(t *testing.T) {
 		location, _ := time.LoadLocation(EnvLocation())
@@ -37,7 +32,6 @@ func TestGetToday(t *testing.T) {
 	})
 }
 
-// GetSqlDsnLocation is to edit SQL DSN setting
 func TestGetSqlDsnLocation(t *testing.T) {
 	t.Run("Case right", func(t *testing.T) {
 		location := EnvLocation()

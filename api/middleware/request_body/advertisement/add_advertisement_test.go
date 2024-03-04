@@ -1,8 +1,3 @@
-/*
-The middleware to check request body's content is regular or not
-It will check all the content include genders,country, age, time etc.
-*/
-
 package advertisement
 
 import (

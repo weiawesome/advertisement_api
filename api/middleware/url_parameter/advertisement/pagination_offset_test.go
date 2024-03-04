@@ -80,7 +80,6 @@ var (
 	}
 )
 
-// parse offset parameter
 func TestParseOffset(t *testing.T) {
 	for _, offsetCase := range rightParseOffsetCases {
 		t.Run(offsetCase.testName, func(t *testing.T) {
@@ -98,7 +97,6 @@ func TestParseOffset(t *testing.T) {
 	}
 }
 
-// validate offset parameter
 func TestValidateOffset(t *testing.T) {
 	for _, offsetCase := range rightValidateOffsetCases {
 		t.Run(offsetCase.testName, func(t *testing.T) {
@@ -116,7 +114,6 @@ func TestValidateOffset(t *testing.T) {
 	}
 }
 
-// MiddlewarePaginationOffset is to validate and parse the offset parameter in url
 func TestMiddlewarePaginationOffset(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 

@@ -1,7 +1,3 @@
-/*
-The repository for the sql.
-*/
-
 package sql
 
 import (

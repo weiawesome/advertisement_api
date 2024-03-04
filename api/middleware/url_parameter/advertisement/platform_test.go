@@ -38,7 +38,6 @@ var (
 	}
 )
 
-// validate platform parameter
 func TestValidatePlatform(t *testing.T) {
 	utils.InitMaps()
 	for _, platformCase := range rightValidatePlatformCases {
@@ -57,7 +56,6 @@ func TestValidatePlatform(t *testing.T) {
 	}
 }
 
-// MiddlewarePlatform is to validate and parse the platform parameter in url
 func TestMiddlewarePlatform(t *testing.T) {
 	utils.InitMaps()
 	for _, platformCase := range rightValidatePlatformCases {

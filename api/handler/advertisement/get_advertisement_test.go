@@ -1,9 +1,3 @@
-/*
-The handler with service to handle about get advertisements.
-At first, it will get value form context then throw the value to the service.
-Finally, according to the value rerun from service then return different response to the client.
-*/
-
 package advertisement
 
 import (
@@ -32,7 +26,6 @@ var (
 	unknownErrorCountryCase = GetAdvertisementCase{Country: advertisement.UnknownErrorCountryMock}
 )
 
-// Handle to handle the request about getting advertisement
 func TestHandlerGetAdvertisementHandle(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 

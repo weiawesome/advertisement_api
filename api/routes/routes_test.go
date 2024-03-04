@@ -1,9 +1,3 @@
-/*
-There is initialization of the routes.
-It will set some setting at first include trusted proxy, template files, groups routes etc.
-Then new redis and sql repository. Finally, initialize all routes and return it.
-*/
-
 package routes
 
 import (
@@ -13,7 +7,6 @@ import (
 	"testing"
 )
 
-// InitRoutes is to initialize all routes and setting
 func TestInitRoutes(t *testing.T) {
 	t.Run("Right case", func(t *testing.T) {
 		sqlRepo := new(sql.RepositoryMock)

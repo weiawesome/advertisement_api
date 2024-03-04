@@ -1,9 +1,3 @@
-/*
-All response for the failure request.
-Including client's error, server's error, day-limit and duration-limit error.
-Furthermore, every error has its reason help client know what's happened.
-*/
-
 package failure
 
 import "testing"
