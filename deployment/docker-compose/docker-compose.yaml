@@ -10,14 +10,10 @@ services:
       MYSQL_PORT: 3306
       MYSQL_USER: DefaultUser
 
-      PAGE_SIZE: 30
-
       REDIS_HOST: redis
       REDIS_PASSWORD: DefaultPassword
       REDIS_PORT: 6379
       REDIS_DB: 0
-
-      CELERY_TASK: tasks
 
       INFLUXDB_HOST: influxdb
       INFLUXDB_PORT: 8086
@@ -25,17 +21,12 @@ services:
       INFLUXDB_ORG: DefaultOrg
       INFLUXDB_BUCKET: DefaultBucket
 
-      CHROMA_HOST: chroma-client
-      CHROMA_PORT: 8888
-      CHROMA_QUERY_NUM: 3
-
     depends_on:
       - redis
       - mysql
       - influxdb
     volumes:
       - logs_directory:/logs
-      - ./../private_key:/app/private_key
 
   redis:
     image: redis:latest
@@ -80,12 +71,19 @@ services:
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=DefaultPassword
     volumes:
       - influxdb-storage:/var/lib/influxdb
+      - influxdb-config:/etc/influxdb2
+      - influxdb-engine:/var/lib/influxdb2
+    ports:
+      - "8086:8086"
 
   prometheus:
     restart: always
     image: prom/prometheus
     volumes:
+      - prometheus-data:/prometheus
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
 
   nginx:
     image: nginx
@@ -93,9 +91,9 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./../tcweeei.study-savvy.com:/tcweeei.study-savvy.com
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+
   nginx-exporter:
     image: nginx/nginx-prometheus-exporter:0.9.0
     command:
@@ -121,4 +119,7 @@ volumes:
   redis_data:
   grafana-storage:
   influxdb-storage:
+  influxdb-config:
+  influxdb-engine:
   logs_directory:
+  prometheus-data:
