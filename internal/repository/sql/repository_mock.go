@@ -7,6 +7,7 @@ package sql
 import (
 	"advertisement_api/api/request/advertisement"
 	"advertisement_api/internal/repository/model"
+	"advertisement_api/utils"
 	"errors"
 	"github.com/stretchr/testify/mock"
 	"time"
@@ -28,7 +29,7 @@ func (r *RepositoryMock) GetAdvertisement(Age int, Country string, Gender string
 	} else if Country == ErrorCase {
 		return []model.Advertisement{}, errors.New("error with " + ErrorCase)
 	} else if Country == TimeLimitCase {
-		time.Sleep(time.Second * 10)
+		time.Sleep(time.Second*time.Duration(utils.GetDefaultTimeLimitSecond()) + time.Second*5)
 		return []model.Advertisement{}, errors.New("error with " + ErrorCase)
 	}
 	return []model.Advertisement{}, nil

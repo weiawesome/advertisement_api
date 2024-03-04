@@ -171,3 +171,17 @@ func TestGetDefaultPlatform(t *testing.T) {
 		assert.Equal(t, defaultPlatform, GetDefaultPlatform())
 	})
 }
+
+// GetDefaultPlatform is to get the default platform
+func TestGetDefaultTimeLimitSecond(t *testing.T) {
+	t.Run("Case with DefaultTimeLimitSecond", func(t *testing.T) {
+		assert.Equal(t, defaultTimeLimitSecond, GetDefaultTimeLimitSecond())
+	})
+}
+
+// GetDefaultPlatform is to get the default platform
+func TestGetDefaultForgetMilliSecond(t *testing.T) {
+	t.Run("Case with DefaultForgetMilliSecond", func(t *testing.T) {
+		assert.Equal(t, defaultForgetMilliSecond, GetDefaultForgetMilliSecond())
+	})
+}

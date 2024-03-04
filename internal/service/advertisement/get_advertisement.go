@@ -34,7 +34,7 @@ func NewGetAdvertisementService(s sql.Repository, r redis.Repository) ServiceGet
 // Get is to get the content from handler and query advertisements by sql and redis repository
 func (m *getService) Get(Key string, Age int, Country string, Gender string, Platform string, Offset int, Limit int) (advertisement.GetAdvertisementResponse, error) {
 	// get the context and set limit of waiting time
-	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(utils.GetDefaultTimeLimitSecond())*time.Second)
 	defer cancel()
 
 	// using singleflight to handle cache invalid
@@ -45,9 +45,9 @@ func (m *getService) Get(Key string, Age int, Country string, Gender string, Pla
 		// get cache from redis repository
 		response, err := m.RedisRepository.LoadCache(Key)
 
-		// set a goroutine to forget the key in 0.1 second
+		// set a goroutine to forget the key in specific time
 		go func() {
-			time.Sleep(100 * time.Millisecond)
+			time.Sleep(time.Duration(utils.GetDefaultForgetMilliSecond()) * time.Millisecond)
 			utils.GetSingleFlight().Forget(Key)
 		}()
 

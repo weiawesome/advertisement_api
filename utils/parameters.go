@@ -27,12 +27,14 @@ var (
 	maxDurationRequest = 1000 //maximum of duration request
 
 	// default value for parameters
-	defaultOffset   = 0                      // default value for offset
-	defaultLimit    = 5                      // default value for limit
-	defaultAge      = -1                     // default value for age
-	defaultGender   = "NoConstraintGender"   // default value for gender
-	defaultCountry  = "NoConstraintCountry"  // default value for country
-	defaultPlatform = "NoConstraintPlatform" // default value for platform
+	defaultOffset            = 0                      // default value for offset
+	defaultLimit             = 5                      // default value for limit
+	defaultAge               = -1                     // default value for age
+	defaultGender            = "NoConstraintGender"   // default value for gender
+	defaultCountry           = "NoConstraintCountry"  // default value for country
+	defaultPlatform          = "NoConstraintPlatform" // default value for platform
+	defaultTimeLimitSecond   = 1
+	defaultForgetMilliSecond = 100
 
 	// map to get the parameter sets content
 	countriesMap map[string]bool // countries map for countries
@@ -151,4 +153,14 @@ func GetDefaultCountry() string {
 // GetDefaultPlatform is to get the default platform
 func GetDefaultPlatform() string {
 	return defaultPlatform
+}
+
+// GetDefaultTimeLimitSecond is to get the default platform
+func GetDefaultTimeLimitSecond() int {
+	return defaultTimeLimitSecond
+}
+
+// GetDefaultForgetMilliSecond is to get the default platform
+func GetDefaultForgetMilliSecond() int {
+	return defaultForgetMilliSecond
 }
