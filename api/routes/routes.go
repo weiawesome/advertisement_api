@@ -11,22 +11,21 @@ import (
 	"advertisement_api/internal/repository/sql"
 	"advertisement_api/utils"
 	"github.com/gin-gonic/gin"
+	"path/filepath"
+	"runtime"
 )
 
 // InitRoutes is to initialize all routes and setting
-func InitRoutes() *gin.Engine {
+func InitRoutes(sqlRepository sql.Repository, redisRepository redis.Repository) *gin.Engine {
 	// get the basic gin engine
 	r := gin.Default()
 
-	// set trust proxy to nil. if failed, log it and rerun nil.
-	err := r.SetTrustedProxies(nil)
-	if err != nil {
-		utils.LogFatal(err.Error())
-		return nil
-	}
+	// get the current file's path
+	_, currentFile, _, _ := runtime.Caller(0)
+	basePath := filepath.Dir(currentFile)
 
 	// load the template files
-	r.LoadHTMLGlob("templates/*")
+	r.LoadHTMLGlob(filepath.Join(basePath, "../../templates/*"))
 
 	// register basic router
 	basicRouter := r.Group("/api/" + utils.GetVersion())
@@ -35,11 +34,6 @@ func InitRoutes() *gin.Engine {
 	apiDocsRouter := basicRouter.Group("/docs")
 	// register router for advertisement affair
 	advertisementRouter := basicRouter.Group("/ad")
-
-	// new a sql repository
-	sqlRepository := sql.NewRepository()
-	// new a redis repository
-	redisRepository := redis.NewRepository()
 
 	// initialize api document router
 	InitAPIDocsRoutes(apiDocsRouter)
