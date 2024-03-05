@@ -1,4 +1,5 @@
-assets
+assets/*.png
+assets/docs/README_ZH.md
 test
 .git
 deployment
