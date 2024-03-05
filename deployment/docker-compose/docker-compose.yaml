@@ -17,7 +17,7 @@ services:
 
       INFLUXDB_HOST: influxdb
       INFLUXDB_PORT: 8086
-      INFLUXDB_TOKEN: DefaultPassword
+      INFLUXDB_TOKEN: DefaultToken
       INFLUXDB_ORG: DefaultOrg
       INFLUXDB_BUCKET: DefaultBucket
 
@@ -68,7 +68,7 @@ services:
       - DOCKER_INFLUXDB_INIT_PASSWORD=DefaultPassword
       - DOCKER_INFLUXDB_INIT_ORG=DefaultOrg
       - DOCKER_INFLUXDB_INIT_BUCKET=DefaultBucket
-      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=DefaultPassword
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=DefaultToken
     volumes:
       - influxdb-storage:/var/lib/influxdb
       - influxdb-config:/etc/influxdb2
@@ -95,7 +95,8 @@ services:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
 
   nginx-exporter:
-    image: nginx/nginx-prometheus-exporter:0.9.0
+    image: nginx/nginx-prometheus-exporter:latest
+    restart: always
     command:
       - '-nginx.scrape-uri=http://nginx/status'
     ports:
