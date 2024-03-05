@@ -16,15 +16,16 @@ var (
 	platforms = []string{"android", "ios", "web"}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              // platforms type
 
 	// limitation of setting
-	minAge             = 1    // minimum of age
-	maxAge             = 100  // maximum of age
-	minLimit           = 1    //minimum of limit
-	maxLimit           = 100  //maximum of limit
-	minOffset          = 0    //minimum of offset
-	minCacheMinute     = 15   //minimum of cache time
-	maxCacheMinute     = 60   //maximum of cache time
-	maxDailyRequest    = 3000 //maximum of daily request
-	maxDurationRequest = 1000 //maximum of duration request
+	minAge             = 1                             // minimum of age
+	maxAge             = 100                           // maximum of age
+	minLimit           = 1                             //minimum of limit
+	maxLimit           = 100                           //maximum of limit
+	minOffset          = 0                             //minimum of offset
+	maxOffset          = maxDurationRequest - minLimit //maximum of offset
+	minCacheMinute     = 15                            //minimum of cache time
+	maxCacheMinute     = 60                            //maximum of cache time
+	maxDailyRequest    = 3000                          //maximum of daily request
+	maxDurationRequest = 1000                          //maximum of duration request
 
 	// default value for parameters
 	defaultOffset            = 0                      // default value for offset
@@ -103,6 +104,11 @@ func GetMaxLimit() int {
 // GetMinOffset is to get the minimum offset
 func GetMinOffset() int {
 	return minOffset
+}
+
+// GetMaxOffset is to get the maximum offset
+func GetMaxOffset() int {
+	return maxOffset
 }
 
 // GetMinCacheMinute is to get the minimum cache time

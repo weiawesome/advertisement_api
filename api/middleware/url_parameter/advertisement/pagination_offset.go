@@ -20,8 +20,8 @@ func parseOffset(offset string) (int, error) {
 
 // validate offset parameter
 func validateOffset(offset int) bool {
-	// check the offset is larger than or equal to offset's minimum
-	return offset >= utils.GetMinOffset()
+	// check the offset is larger than or equal to offset's minimum and lower than or equal to offset's maximum
+	return offset >= utils.GetMinOffset() && offset <= utils.GetMaxOffset()
 }
 
 // MiddlewarePaginationOffset is to validate and parse the offset parameter in url

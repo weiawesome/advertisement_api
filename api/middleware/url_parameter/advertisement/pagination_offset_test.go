@@ -49,7 +49,7 @@ var (
 
 	rightValidateOffsetCases = []OffsetTestCase{
 		{
-			testName: "Correct case with value min offset (ege case)",
+			testName: "Correct case with value min offset (edge case)",
 			intValue: utils.GetMinOffset(),
 			strValue: strconv.Itoa(utils.GetMinOffset()),
 		},
@@ -57,6 +57,11 @@ var (
 			testName: "Correct case with value 24",
 			intValue: 24,
 			strValue: "24",
+		},
+		{
+			testName: "Correct case with value max offset (edge case)",
+			intValue: utils.GetMaxOffset(),
+			strValue: strconv.Itoa(utils.GetMaxOffset()),
 		},
 	}
 	errorValidateOffsetCases = []OffsetTestCase{
@@ -69,6 +74,11 @@ var (
 			testName: "Error case with value lower than min offset",
 			intValue: utils.GetMinOffset() - 10,
 			strValue: strconv.Itoa(utils.GetMinOffset() - 10),
+		},
+		{
+			testName: "Error case with value higher than max offset",
+			intValue: utils.GetMaxOffset() + 10,
+			strValue: strconv.Itoa(utils.GetMaxOffset() + 10),
 		},
 	}
 
