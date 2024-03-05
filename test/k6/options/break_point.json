@@ -1,6 +1,6 @@
 {
   "executor": "ramping-arrival-rate",
   "stages": [
-    { "duration": "20m", "target": 1000 }
+    { "duration": "1h", "target": 10000000 }
   ]
 }
