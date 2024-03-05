@@ -5,9 +5,16 @@ import (
 	"testing"
 )
 
-func TestNewInfluxDBClient(t *testing.T) {
+func TestNewInfluxDBHook(t *testing.T) {
 	t.Run("Case right", func(t *testing.T) {
-		client := NewInfluxDBClient()
-		assert.Equal(t, influxDBClient, client)
+		hook := NewInfluxDBHook()
+		assert.NotNil(t, hook)
+	})
+}
+
+func TestRun(t *testing.T) {
+	t.Run("Case right", func(t *testing.T) {
+		hook := NewInfluxDBHook()
+		hook.Run(logger.Info(), logger.GetLevel(), "test log")
 	})
 }

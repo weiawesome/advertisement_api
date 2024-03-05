@@ -12,6 +12,7 @@ import (
 	"context"
 	"github.com/influxdata/influxdb-client-go/v2"
 	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"os"
 	"path/filepath"
@@ -32,15 +33,16 @@ func InitLogger() {
 		Compress:   true,
 	}
 
-	// new a local and influxdb logger instance
+	// new a local logger instance
 	localLogger := zerolog.New(logFile).With().Timestamp().Logger()
-	influxdbLogger := zerolog.Logger{}
 
 	// make logger equal to local logger at first
 	logger = localLogger
 
 	// set using influxdb mode to false at first
 	isUsingInfluxDB := false
+
+	influxHook := NewInfluxDBHook()
 
 	// start to try to connect influxdb
 	go func() {
@@ -55,14 +57,12 @@ func InitLogger() {
 				return
 			default:
 				// try to connect influxdb. if success to connect then replace logger else then turn back to local logger.
-				influxClient := NewInfluxDBClient()
-				if result, err := influxDBClient.Client.Ping(ctx); result == true {
+				if result, err := influxHook.Client.Ping(ctx); result == true {
 					// if it is a new connection, it will write all formal logs to the influxdb.
 					if !isUsingInfluxDB {
-						logger = influxdbLogger
-						logger = logger.Hook(InfluxDBHook{Client: influxClient})
+						logger = log.Hook(influxHook)
 						isUsingInfluxDB = true
-						uploadRotatedLogsToInfluxDB(influxClient.Client)
+						uploadRotatedLogsToInfluxDB(influxHook.Client)
 					}
 				} else {
 					// turn back to local logger and log error to connect influxdb
@@ -71,6 +71,7 @@ func InitLogger() {
 						isUsingInfluxDB = false
 					}
 					LogError(err.Error())
+					influxHook = NewInfluxDBHook()
 				}
 				// sleep a minute and then try to connect again.
 				time.Sleep(time.Minute)

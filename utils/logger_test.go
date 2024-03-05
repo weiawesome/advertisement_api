@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
+	"gopkg.in/natefinch/lumberjack.v2"
 	"strings"
 	"testing"
 	"time"
@@ -71,6 +72,62 @@ func TestGetField(t *testing.T) {
 			assert.Equal(t, result, lc.expected)
 		})
 	}
+}
+
+func TestInitLogger(t *testing.T) {
+	t.Run("Case right", func(t *testing.T) {
+		InitLogger()
+		assert.NotNil(t, logger)
+	})
+}
+
+func TestUploadRotatedLogsToInfluxDB(t *testing.T) {
+	t.Run("Case error", func(t *testing.T) {
+		logFile := &lumberjack.Logger{
+			Filename:   "logs/server.log",
+			MaxSize:    10,
+			MaxBackups: 3,
+			MaxAge:     30,
+			Compress:   true,
+		}
+
+		logger = zerolog.New(logFile).With().Timestamp().Logger()
+
+		logger.Info().Msg(testMessage)
+
+		hook := NewInfluxDBHook()
+
+		uploadRotatedLogsToInfluxDB(hook.Client)
+
+	})
+	t.Run("Case right", func(t *testing.T) {
+		logFile := &lumberjack.Logger{
+			Filename:   "logs/server.log",
+			MaxSize:    10,
+			MaxBackups: 3,
+			MaxAge:     30,
+			Compress:   true,
+		}
+
+		logger = zerolog.New(logFile).With().Timestamp().Logger()
+
+		logger.Info().Msg(testMessage)
+
+		logger = zerolog.Logger{}
+
+		hook := NewInfluxDBHook()
+
+		uploadRotatedLogsToInfluxDB(hook.Client)
+
+	})
+	t.Run("Case error", func(t *testing.T) {
+		logger = zerolog.Logger{}
+
+		hook := NewInfluxDBHook()
+
+		uploadRotatedLogsToInfluxDB(hook.Client)
+
+	})
 }
 
 func TestParseTime(t *testing.T) {
