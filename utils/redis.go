@@ -42,10 +42,5 @@ func CloseRedis() error {
 		return nil
 	}
 
-	err := redisClient.Close()
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return redisClient.Close()
 }
