@@ -86,6 +86,12 @@ func TestGetMinOffset(t *testing.T) {
 	})
 }
 
+func TestGetMaxOffset(t *testing.T) {
+	t.Run("Case with MaxOffset", func(t *testing.T) {
+		assert.Equal(t, maxOffset, GetMaxOffset())
+	})
+}
+
 func TestGetMinCacheMinute(t *testing.T) {
 	t.Run("Case with MinCacheMinute", func(t *testing.T) {
 		assert.Equal(t, minCacheMinute, GetMinCacheMinute())
