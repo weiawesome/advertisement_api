@@ -10,7 +10,6 @@ package utils
 import (
 	"bufio"
 	"context"
-	"fmt"
 	"github.com/influxdata/influxdb-client-go/v2"
 	"github.com/rs/zerolog"
 	"gopkg.in/natefinch/lumberjack.v2"
@@ -187,7 +186,6 @@ func LogInfo(msg string) {
 
 // LogWarn is to log warning information need to focus
 func LogWarn(msg string) {
-	fmt.Println(msg)
 	logger.Warn().Msg(msg)
 }
 
