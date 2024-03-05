@@ -10,9 +10,9 @@ package utils
 import (
 	"bufio"
 	"context"
+	"fmt"
 	"github.com/influxdata/influxdb-client-go/v2"
 	"github.com/rs/zerolog"
-	"github.com/rs/zerolog/log"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"os"
 	"path/filepath"
@@ -60,9 +60,9 @@ func InitLogger() {
 				if result, err := influxHook.Client.Ping(ctx); result == true {
 					// if it is a new connection, it will write all formal logs to the influxdb.
 					if !isUsingInfluxDB {
-						logger = log.Hook(influxHook)
+						logger = zerolog.New(nil).Hook(&influxHook)
 						isUsingInfluxDB = true
-						uploadRotatedLogsToInfluxDB(influxHook.Client)
+						go uploadRotatedLogsToInfluxDB(influxHook.Client)
 					}
 				} else {
 					// turn back to local logger and log error to connect influxdb
@@ -187,6 +187,7 @@ func LogInfo(msg string) {
 
 // LogWarn is to log warning information need to focus
 func LogWarn(msg string) {
+	fmt.Println(msg)
 	logger.Warn().Msg(msg)
 }
 
