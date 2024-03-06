@@ -41,10 +41,7 @@ func InitDB() error {
 
 	// try to migrate the model to the database
 	// models including advertisement, age condition, country condition, platform condition and gender condition
-	if err := db.AutoMigrate(model.Advertisement{}, model.AgeCondition{}, model.CountryCondition{}, model.PlatformCondition{}, model.GenderCondition{}); err != nil {
-		return err
-	}
-	return nil
+	return db.AutoMigrate(model.Advertisement{}, model.AgeCondition{}, model.CountryCondition{}, model.PlatformCondition{}, model.GenderCondition{})
 }
 
 // GetDB is to get the db instance
