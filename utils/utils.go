@@ -45,3 +45,17 @@ func GetSqlDsnLocation() string {
 func GetCacheKey(age int, country string, gender string, platform string) string {
 	return strconv.Itoa(age) + country + gender + platform
 }
+
+// GetNow is the function to get now
+func GetNow() time.Time {
+	// get the location setting from the environment
+	location, err := time.LoadLocation(EnvLocation())
+
+	// if failed to load location time, it will use local time to return
+	if err != nil {
+		return time.Now()
+	}
+
+	// return the time with location in environment
+	return time.Now().In(location)
+}

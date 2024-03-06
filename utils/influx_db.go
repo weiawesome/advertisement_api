@@ -8,7 +8,6 @@ import (
 	"context"
 	"github.com/influxdata/influxdb-client-go/v2"
 	"github.com/rs/zerolog"
-	"time"
 )
 
 // InfluxDBHook is the hook structure for zerolog
@@ -32,7 +31,7 @@ func (h InfluxDBHook) Run(e *zerolog.Event, level zerolog.Level, message string)
 	// set the save point
 	point := influxdb2.
 		NewPointWithMeasurement("logs").
-		SetTime(time.Now()).
+		SetTime(GetNow()).
 		AddTag("level", level.String()).
 		AddField("message", message)
 

@@ -140,7 +140,7 @@ func TestParseTime(t *testing.T) {
 	for _, tec := range timeErrorCases {
 		t.Run(tec.name, func(t *testing.T) {
 			result := parseTime(tec.logTime)
-			assert.Equal(t, time.Now(), result)
+			assert.WithinDuration(t, time.Now(), result, time.Second)
 		})
 	}
 }

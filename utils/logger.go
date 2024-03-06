@@ -164,7 +164,7 @@ func parseTime(logTime string) time.Time {
 	// parse the time when fail then return time in now
 	parsedTime, err := time.Parse(time.RFC3339, logTime)
 	if err != nil {
-		return time.Now()
+		return GetNow()
 	}
 	return parsedTime
 }

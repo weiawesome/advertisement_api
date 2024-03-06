@@ -69,3 +69,24 @@ func TestGetCacheKey(t *testing.T) {
 		assert.Equal(t, exceptedResult, GetCacheKey(testAge, testCountry, testGender, testPlatform))
 	})
 }
+
+func TestGetNow(t *testing.T) {
+	t.Run("Case right", func(t *testing.T) {
+		location, _ := time.LoadLocation(EnvLocation())
+		assert.WithinDuration(t, time.Now().In(location), GetNow(), time.Second)
+	})
+	t.Run("Case error", func(t *testing.T) {
+		location := EnvLocation()
+		err := os.Setenv("LOCATION", "no exist location")
+		if err != nil {
+			t.Errorf("error to set environment " + err.Error())
+			return
+		}
+		assert.Equal(t, time.Now(), GetNow())
+		err = os.Setenv("LOCATION", location)
+		if err != nil {
+			t.Errorf("error to set environment " + err.Error())
+			return
+		}
+	})
+}
