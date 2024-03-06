@@ -3,9 +3,17 @@ package utils
 import (
 	"github.com/stretchr/testify/assert"
 	"os"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
+)
+
+const (
+	testAge      = 24
+	testCountry  = "TW"
+	testGender   = "M"
+	testPlatform = "ios"
 )
 
 func TestGetToday(t *testing.T) {
@@ -52,5 +60,12 @@ func TestGetSqlDsnLocation(t *testing.T) {
 			t.Errorf("unset environment error " + err.Error())
 			return
 		}
+	})
+}
+
+func TestGetCacheKey(t *testing.T) {
+	t.Run("Case right", func(t *testing.T) {
+		exceptedResult := strconv.Itoa(testAge) + testCountry + testGender + testPlatform
+		assert.Equal(t, exceptedResult, GetCacheKey(testAge, testCountry, testGender, testPlatform))
 	})
 }

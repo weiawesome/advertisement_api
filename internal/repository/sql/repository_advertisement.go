@@ -15,7 +15,7 @@ import (
 )
 
 // GetAdvertisement is to get advertisements with different condition like age, gender, platform, country etc.
-func (r *repository) GetAdvertisement(Age int, Country string, Gender string, Platform string, Offset int, Limit int) ([]model.Advertisement, error) {
+func (r *repository) GetAdvertisement(Age int, Country string, Gender string, Platform string) ([]model.Advertisement, error) {
 	// declare a variable for the result
 	var advertisements []model.Advertisement
 
@@ -49,8 +49,8 @@ func (r *repository) GetAdvertisement(Age int, Country string, Gender string, Pl
 			tx = tx.Joins("Platforms", r.db.Where(&model.PlatformCondition{PlatformCode: Platform})).Where("platform_code = ?", Platform).Or("all_platform_condition = true")
 		}
 
-		// order by end_at desc and do pagination by offset and limit
-		tx = tx.Order("end_at DESC").Offset(Offset).Limit(Limit).Find(&advertisements)
+		// order by end_at desc and find the result
+		tx = tx.Order("end_at DESC").Find(&advertisements)
 
 		// return the query result if success, result's error will be nil
 		return tx.Error

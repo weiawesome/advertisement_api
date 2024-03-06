@@ -19,7 +19,7 @@ type RepositoryMock struct {
 	mock.Mock
 }
 
-func (r *RepositoryMock) GetAdvertisement(Age int, Country string, Gender string, Platform string, Offset int, Limit int) ([]model.Advertisement, error) {
+func (r *RepositoryMock) GetAdvertisement(Age int, Country string, Gender string, Platform string) ([]model.Advertisement, error) {
 	if Country == NormalCase {
 		return []model.Advertisement{{Title: NormalCase}}, nil
 	} else if Country == ErrorCase {

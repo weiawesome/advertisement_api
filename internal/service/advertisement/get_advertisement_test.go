@@ -24,7 +24,8 @@ func TestGet(t *testing.T) {
 		redisRepository := redis.RepositoryMock{}
 		service := getService{SqlRepository: &sqlRepository, RedisRepository: &redisRepository}
 
-		result, err := service.Get(redis.CacheHitCase, 0, sql.NormalCase, "M", "ios", 0, 10)
+		result, err := service.Get("", 0, sql.NormalCase, redis.CacheHitCase, redis.CacheHitCase, 0, 10)
+
 		assert.Equal(t, nil, err)
 		assert.Equal(t, 1, len(result.Items))
 		assert.Equal(t, redis.CacheResult, result.Items[0].Title)
@@ -44,7 +45,7 @@ func TestGet(t *testing.T) {
 		redisRepository := redis.RepositoryMock{}
 		service := getService{SqlRepository: &sqlRepository, RedisRepository: &redisRepository}
 
-		_, err := service.Get(redis.CacheMissCase, 0, sql.ErrorCase, "M", "ios", 0, 10)
+		_, err := service.Get(redis.CacheMissCase, 0, sql.ErrorCase, redis.CacheMissCase, redis.CacheMissCase, 0, 10)
 		assert.Equal(t, "error with "+sql.ErrorCase, err.Error())
 	})
 	t.Run("Case error with cache write back error", func(t *testing.T) {
@@ -52,8 +53,10 @@ func TestGet(t *testing.T) {
 		redisRepository := redis.RepositoryMock{}
 		service := getService{SqlRepository: &sqlRepository, RedisRepository: &redisRepository}
 
-		_, err := service.Get(redis.CacheNormalCase, 0, sql.ErrorCase, "M", "ios", 0, 10)
-		assert.Equal(t, "error with "+sql.ErrorCase, err.Error())
+		result, err := service.Get(redis.CacheNormalCase, 0, sql.NormalCase, redis.CacheMissCase, redis.CacheMissCase, 0, 10)
+		assert.Equal(t, nil, err)
+		assert.Equal(t, 1, len(result.Items))
+		assert.Equal(t, sql.NormalCase, result.Items[0].Title)
 	})
 	t.Run("Case error with time limit", func(t *testing.T) {
 		sqlRepository := sql.RepositoryMock{}

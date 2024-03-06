@@ -42,8 +42,10 @@ func (m *getService) Get(Key string, Age int, Country string, Gender string, Pla
 		// declare the variable for the result
 		result := advertisement.GetAdvertisementResponse{}
 
+		cacheKey := utils.GetCacheKey(Age, Country, Gender, Platform)
+
 		// get cache from redis repository
-		response, err := m.RedisRepository.LoadCache(Key)
+		response, err := m.RedisRepository.LoadCache(cacheKey)
 
 		// set a goroutine to forget the key in specific time
 		go func() {
@@ -52,31 +54,42 @@ func (m *getService) Get(Key string, Age int, Country string, Gender string, Pla
 		}()
 
 		if err == nil {
+			// if the result exist then fill it
+			if Offset < len(response.Items) {
+				result.Items = response.Items[Offset : Offset+min(len(response.Items)-Offset, Limit)]
+			}
 			// cache hit then return the cache result immediately
 			go utils.LogInfo("Cache hit")
-			return response, nil
+			return result, nil
 		} else {
 			// cache miss
 			go utils.LogInfo("Cache miss")
 
 			// start to find the data using sql repository
-			advertisements, err := m.SqlRepository.GetAdvertisement(Age, Country, Gender, Platform, Offset, Limit)
+			advertisements, err := m.SqlRepository.GetAdvertisement(Age, Country, Gender, Platform)
 
 			if err != nil {
 				// error to find the advertisements
-				return response, err
+				return result, err
 			}
 
-			result.Items = make([]advertisement.Item, len(advertisements))
-			// enumerate the result
+			// declare the all result variable
+			allResult := advertisement.GetAdvertisementResponse{}
+
+			// enumerate it and fill into the result
+			allResult.Items = make([]advertisement.Item, len(advertisements))
 			for i, ad := range advertisements {
-				// add each advertisement's information into result
-				result.Items[i] = advertisement.Item{Title: ad.Title, EndAt: ad.EndAt}
+				allResult.Items[i] = advertisement.Item{Title: ad.Title, EndAt: ad.EndAt}
+			}
+
+			// if the result exist then fill it
+			if Offset < len(allResult.Items) {
+				result.Items = allResult.Items[Offset : Offset+min(len(allResult.Items)-Offset, Limit)]
 			}
 
 			// use another goroutine to set the cache. if failed, then log its error.
 			go func() {
-				err := m.RedisRepository.SaveCache(Key, result)
+				err := m.RedisRepository.SaveCache(cacheKey, allResult)
 				if err != nil {
 					utils.LogError(err.Error())
 				}

@@ -13,7 +13,7 @@ import (
 
 // Repository is the interface of sql repository
 type Repository interface {
-	GetAdvertisement(Age int, Country string, Gender string, Platform string, Offset int, Limit int) ([]model.Advertisement, error)
+	GetAdvertisement(Age int, Country string, Gender string, Platform string) ([]model.Advertisement, error)
 	AddAdvertisement(data advertisement.AddAdvertisementRequest) error
 }
 

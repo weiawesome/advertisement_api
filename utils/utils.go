@@ -5,6 +5,7 @@ Some tools including getting today, getting location dsn setting.
 package utils
 
 import (
+	"strconv"
 	"strings"
 	"time"
 )
@@ -38,4 +39,9 @@ func GetSqlDsnLocation() string {
 		return strings.Replace(location, "/", "%2F", 1)
 	}
 	return localLocation
+}
+
+// GetCacheKey is to get the key for the cache
+func GetCacheKey(age int, country string, gender string, platform string) string {
+	return strconv.Itoa(age) + country + gender + platform
 }
