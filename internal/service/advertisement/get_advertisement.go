@@ -79,7 +79,7 @@ func (m *getService) Get(Key string, Age int, Country string, Gender string, Pla
 			// enumerate it and fill into the result
 			allResult.Items = make([]advertisement.Item, len(advertisements))
 			for i, ad := range advertisements {
-				allResult.Items[i] = advertisement.Item{Title: ad.Title, EndAt: ad.EndAt}
+				allResult.Items[i] = advertisement.Item{Title: ad.Title, EndAt: ad.EndAt.UTC()}
 			}
 
 			// if the result exist then fill it
