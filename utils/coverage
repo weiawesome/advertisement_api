@@ -50,11 +50,11 @@ advertisement_api/utils/logger.go:47.12,53.7 3 1
 advertisement_api/utils/logger.go:53.7,54.11 1 1
 advertisement_api/utils/logger.go:55.22,56.11 1 0
 advertisement_api/utils/logger.go:57.12,59.67 1 1
-advertisement_api/utils/logger.go:59.67,61.26 1 1
-advertisement_api/utils/logger.go:61.26,65.7 3 1
-advertisement_api/utils/logger.go:66.11,68.25 1 0
+advertisement_api/utils/logger.go:59.67,61.26 1 0
+advertisement_api/utils/logger.go:61.26,65.7 3 0
+advertisement_api/utils/logger.go:66.11,68.25 1 1
 advertisement_api/utils/logger.go:68.25,71.7 2 0
-advertisement_api/utils/logger.go:72.6,73.36 2 0
+advertisement_api/utils/logger.go:72.6,73.36 2 1
 advertisement_api/utils/logger.go:76.5,76.28 1 1
 advertisement_api/utils/logger.go:83.65,93.16 5 1
 advertisement_api/utils/logger.go:93.16,95.3 1 0
@@ -63,7 +63,7 @@ advertisement_api/utils/logger.go:98.33,101.17 2 1
 advertisement_api/utils/logger.go:101.17,103.12 2 0
 advertisement_api/utils/logger.go:107.3,109.22 2 1
 advertisement_api/utils/logger.go:109.22,122.18 7 1
-advertisement_api/utils/logger.go:122.18,124.5 1 0
+advertisement_api/utils/logger.go:122.18,124.5 1 1
 advertisement_api/utils/logger.go:128.3,129.17 2 1
 advertisement_api/utils/logger.go:129.17,131.12 2 0
 advertisement_api/utils/logger.go:134.3,135.17 2 1
@@ -85,7 +85,7 @@ advertisement_api/utils/logger.go:203.27,205.2 1 1
 advertisement_api/utils/mysql.go:19.36,31.2 7 1
 advertisement_api/utils/mysql.go:34.21,38.39 2 1
 advertisement_api/utils/mysql.go:38.39,40.3 1 1
-advertisement_api/utils/mysql.go:44.2,44.146 1 1
+advertisement_api/utils/mysql.go:44.2,44.146 1 0
 advertisement_api/utils/mysql.go:48.23,50.2 1 1
 advertisement_api/utils/mysql.go:53.22,54.15 1 1
 advertisement_api/utils/mysql.go:54.15,56.3 1 1
