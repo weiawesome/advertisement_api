@@ -57,7 +57,10 @@ func (m *getService) Get(Key string, Age int, Country string, Gender string, Pla
 			// if the result exist then fill it
 			if Offset < len(response.Items) {
 				result.Items = response.Items[Offset : Offset+min(len(response.Items)-Offset, Limit)]
+			} else {
+				result.Items = make([]advertisement.Item, 0)
 			}
+
 			// cache hit then return the cache result immediately
 			go utils.LogInfo("Cache hit")
 			return result, nil
@@ -85,6 +88,8 @@ func (m *getService) Get(Key string, Age int, Country string, Gender string, Pla
 			// if the result exist then fill it
 			if Offset < len(allResult.Items) {
 				result.Items = allResult.Items[Offset : Offset+min(len(allResult.Items)-Offset, Limit)]
+			} else {
+				result.Items = make([]advertisement.Item, 0)
 			}
 
 			// use another goroutine to set the cache. if failed, then log its error.
