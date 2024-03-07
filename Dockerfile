@@ -1,6 +1,7 @@
 FROM golang:latest
 
-ENV GOOS=linux GOARCH=arm64
+# compile to ARM architecture
+#ENV GOOS=linux GOARCH=arm64
 
 WORKDIR /app
 
