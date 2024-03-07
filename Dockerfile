@@ -1,5 +1,7 @@
 FROM golang:latest
 
+ENV GOOS=linux GOARCH=arm64
+
 WORKDIR /app
 
 COPY . .

@@ -54,7 +54,7 @@ func EnvMySqlSlaveAddress() string {
 		ip = defaultSqlSlaveHost
 	}
 	if port = os.Getenv("MYSQL_SLAVE_PORT"); len(port) == 0 {
-		port = defaultSqlSlavePassword
+		port = defaultSqlSalvePort
 	}
 	return ip + ":" + port
 }
@@ -99,7 +99,7 @@ func EnvMySqlPassword() string {
 func EnvMySqlSlavePassword() string {
 	var password string
 	if password = os.Getenv("MYSQL_SLAVE_PASSWORD"); len(password) == 0 {
-		password = defaultSqlSlaveUser
+		password = defaultSqlSlavePassword
 	}
 	return password
 }

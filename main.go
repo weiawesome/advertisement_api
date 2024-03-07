@@ -35,6 +35,13 @@ func main() {
 			utils.LogFatal(err.Error())
 		}
 	}()
+	// close sql-db connection when application turn off. log error when close fail.
+	defer func() {
+		err := utils.CloseDBSlave()
+		if err != nil {
+			utils.LogFatal(err.Error())
+		}
+	}()
 
 	// initialize the redis connection. return and log error when connect fail.
 	if err := utils.InitRedis(); err != nil {
