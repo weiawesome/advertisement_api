@@ -49,8 +49,8 @@ func (r *repository) GetAdvertisement(Age int, Country string, Gender string, Pl
 			tx = tx.Joins("Platforms", r.db.Where(&model.PlatformCondition{PlatformCode: Platform})).Where("platform_code = ?", Platform).Or("all_platform_condition = true")
 		}
 
-		// order by end_at desc and find the result
-		tx = tx.Order("end_at DESC").Find(&advertisements)
+		// order by end_at asc and find the result
+		tx = tx.Order("end_at ASC").Find(&advertisements)
 
 		// return the query result if success, result's error will be nil
 		return tx.Error
