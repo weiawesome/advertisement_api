@@ -128,6 +128,7 @@ Q、對於達到題目要求的設計
     1. 提供重複參數視為錯誤 如 ?age=10&age=24
     2. 提供參數空白是為錯誤 如 ?age=&platform=ios (若不規範年齡，正確為 ?platform=ios 直接不填) 
     3. 不論是 新增或是獲取廣告 content-type 均需設定為 application/json(與題目給予範例相同)
+    4. 在投遞廣告請求中，對於條件不得重複 如 gender = ["M","M"] 則視為違法請求
 ```
 
 ## 資料庫設計
@@ -240,6 +241,39 @@ Q、對於達到題目要求的設計
     對於此類問題我採用的方式 是透過 **隨機設置過期時間** 以避免同時過期
 
     ![](../cache_penetration.png)
+
+#### Cache 策略
+最開始對於 Cache 最開始策略是採用 整個路由(包含offset、limit) 作為 cache 的 key
+
+| 鍵 (Key) | 值 (Value) |
+|---------|-----------|
+| 完整 URL  | 相對應的資料    |
+
+後來經過基礎的實驗後(每秒 100 併發請求 持續 10 分鐘)，發現快取命中率過低(約略都落在 1% 上下)
+
+思考後認為必須要更新快取的策略，以提升系統整體的效能。
+
+而我便發現一個重點，(**單一時段內，請求不會超過 1000 筆**)
+
+換句話說，在經過其他篩選條件後若不分頁，頂多也就是 1000 筆 (是相對小的數值)。
+
+為此我打算在資料庫查詢時，不做分頁查詢。
+再透過自行計算offset、limit對應的資料回傳，並且將整分資料作為快取儲存。
+
+| 鍵 (Key) | 值 (Value) |
+|---------|-----------|
+| 篩選條件組合  | 整份資料      |
+
+而獲得快取後，亦是另外再透過自行計算offset、limit對應的資料回傳。
+
+**最後在更新快取策略後，快取命中率平均都提升到 80% 以上。**
+```
+備註 :
+    如此的快取方式，並非在所有狀況都是最好的選擇
+    主要是基於 單一時段內，請求不會超過 1000 筆 這特殊條件
+    
+    因此在開發時，往往都需要根據不同的業務情境做不同的選擇。
+```
 
 ## 日誌管理 與 資料紀錄 設計
 在日誌管理，透過 zerolog 這套件進行日誌紀錄(比 go 原生 log 還快很多)
@@ -584,7 +618,6 @@ mobile 與 tablet 歸類於 手持裝置
 
 以上便是我的分析結果，而當中的分析方式仍可優化。
 
-
 ## 系統成果
 ### 系統監控 - 每秒平均請求數
 ![request_rate.png](../request_rate.png)
@@ -609,7 +642,26 @@ mobile 與 tablet 歸類於 手持裝置
 ### 系統部署 - Docker-compose 資訊
 ![deployment_docker-compose.png](../deployment_docker-compose.png)
 ### 系統部署 - Kubernetes 資訊
+![kubernetes_workload.png](kubernetes_workload.png)
+![kubernetes_deployment.png](kubernetes_deployment.png)
+![kubernetes_stateful_sets.png](kubernetes_stateful_sets.png)
+![kubernetes_information.png](kubernetes_information.png)
 
+```
+備註 :
+    在 Kubernetes 的部署中，分為本地部署與雲端部署。
+    
+    在雲端部署中(如 GCP、Azure、AWS 等等)，建議採用雲端相對應資料庫。
+        在雲端服務中，服務商通常會對其資料庫做多實例、讀寫分離，
+        而使用者僅用當作單實例連接即可，便享有高負載、高可用
+
+    在地端部署中，資料庫與伺服器均位於自身的伺服器，(切換至 local-kubernetes 分支)
+        對於資料庫有分別多實例版本 ( Redis -> 叢集 、 MySQL -> 主從式)
+        對於伺服器具有 HPA (根據流量動態調整實例數) 並且存在 Rolling Update 機制 
+    
+    另外在實驗中有使用 樹莓派-5 作為伺服器 使用 Kubernetes 部署
+        因此還有分別撰寫 X86 與 ARM 版本
+```
 ### 單元測試 - 測試代碼覆蓋率
 ![unit_test_api.png](../unit_test_api.png)
 ![unit_test_internal.png](../unit_test_internal.png)
@@ -627,7 +679,6 @@ mobile 與 tablet 歸類於 手持裝置
 ### 流量測試 - 浸泡測試
 ### 流量測試 - 尖峰測試
 ### 流量測試 - 斷點測試
-
 
 ## 自我評價 與 系統未來擴展方向
 
