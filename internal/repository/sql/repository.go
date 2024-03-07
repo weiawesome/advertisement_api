@@ -19,11 +19,12 @@ type Repository interface {
 
 // repository is the structure of the sql repository
 type repository struct {
-	db *gorm.DB // database connection by gorm
+	db      *gorm.DB // database connection by gorm
+	dbSlave *gorm.DB // database connection by gorm
 }
 
 // NewRepository is the constructor for the sql repository
 func NewRepository() Repository {
 	// return a new sql repository with the sql database client
-	return &repository{db: utils.GetDB()}
+	return &repository{db: utils.GetDB(), dbSlave: utils.GetDBSalve()}
 }

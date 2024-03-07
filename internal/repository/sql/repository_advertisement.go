@@ -21,32 +21,32 @@ func (r *repository) GetAdvertisement(Age int, Country string, Gender string, Pl
 
 	// build a translation to make sure correctness in database
 	// if the action in transaction fail, then it will roll back the database automatically.
-	err := r.db.Transaction(func(tx *gorm.DB) error {
+	err := r.dbSlave.Transaction(func(tx *gorm.DB) error {
 		// find the advertisements that its showing period is in now
 		tx = tx.Model(model.Advertisement{}).Where("start_at <= NOW()").Where("end_at >= NOW()")
 
 		// the age equal to default value that mean no-constraint, and it doesn't need to filter more
 		if Age != utils.GetDefaultAge() {
 			// join age_condition find age between age_start and age_end or all_age_condition is true
-			tx = tx.Joins("Ages", r.db.Where("age_start <= ?", Age).Where("age_end >= ?", Age)).Where("age_start <= ?", Age).Where("age_end >= ?", Age).Or("all_age_condition = true")
+			tx = tx.Joins("Ages", r.dbSlave.Where("age_start <= ?", Age).Where("age_end >= ?", Age)).Where("age_start <= ?", Age).Where("age_end >= ?", Age).Or("all_age_condition = true")
 		}
 
 		// the country equal to default value that mean no-constraint, and it doesn't need to filter more
 		if Country != utils.GetDefaultCountry() {
 			// join country_condition find country is equal or all_country_condition is true
-			tx = tx.Joins("Countries", r.db.Where(&model.CountryCondition{CountryISO: Country})).Where("country_iso = ?", Country).Or("all_country_condition = true")
+			tx = tx.Joins("Countries", r.dbSlave.Where(&model.CountryCondition{CountryISO: Country})).Where("country_iso = ?", Country).Or("all_country_condition = true")
 		}
 
 		// the gender equal to default value that mean no-constraint, and it doesn't need to filter more
 		if Gender != utils.GetDefaultGender() {
 			// join gender_condition find gender is equal or all_gender_condition is true
-			tx = tx.Joins("Genders", r.db.Where(&model.GenderCondition{GenderCode: Gender})).Where("gender_code = ?", Gender).Or("all_gender_condition = true")
+			tx = tx.Joins("Genders", r.dbSlave.Where(&model.GenderCondition{GenderCode: Gender})).Where("gender_code = ?", Gender).Or("all_gender_condition = true")
 		}
 
 		// the platform equal to default value that mean no-constraint, and it doesn't need to filter more
 		if Platform != utils.GetDefaultPlatform() {
 			// join platform_condition find platform is equal or all_platform_condition is true
-			tx = tx.Joins("Platforms", r.db.Where(&model.PlatformCondition{PlatformCode: Platform})).Where("platform_code = ?", Platform).Or("all_platform_condition = true")
+			tx = tx.Joins("Platforms", r.dbSlave.Where(&model.PlatformCondition{PlatformCode: Platform})).Where("platform_code = ?", Platform).Or("all_platform_condition = true")
 		}
 
 		// order by end_at asc and find the result

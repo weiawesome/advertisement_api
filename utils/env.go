@@ -9,11 +9,15 @@ import "os"
 
 // default value setting
 var (
-	defaultSqlHost     = "localhost"       // default sql host
-	defaultSqlPort     = "3306"            // default sql port
-	defaultSqlDb       = "DefaultDb"       // default sql db name
-	defaultSqlUser     = "DefaultUser"     // default sql user
-	defaultSqlPassword = "DefaultPassword" // default sql password
+	defaultSqlHost          = "localhost"       // default sql host
+	defaultSqlSlaveHost     = "localhost"       // default sql host
+	defaultSqlPort          = "3306"            // default sql port
+	defaultSqlSalvePort     = "3306"            // default sql port
+	defaultSqlDb            = "DefaultDb"       // default sql db name
+	defaultSqlUser          = "DefaultUser"     // default sql user
+	defaultSqlSlaveUser     = "DefaultUser"     // default sql user
+	defaultSqlPassword      = "DefaultPassword" // default sql password
+	defaultSqlSlavePassword = "DefaultPassword" // default sql password
 
 	defaultRedisHost     = "localhost"       // default redis host
 	defaultRedisPort     = "6379"            // default redis port
@@ -42,6 +46,19 @@ func EnvMySqlAddress() string {
 	return ip + ":" + port
 }
 
+// EnvMySqlSlaveAddress is to get the environment variable of MYSQL_HOST and MYSQL_PORT
+func EnvMySqlSlaveAddress() string {
+	var ip string
+	var port string
+	if ip = os.Getenv("MYSQL_SLAVE_HOST"); len(ip) == 0 {
+		ip = defaultSqlSlaveHost
+	}
+	if port = os.Getenv("MYSQL_SLAVE_PORT"); len(port) == 0 {
+		port = defaultSqlSlavePassword
+	}
+	return ip + ":" + port
+}
+
 // EnvMySqlDb is to get the environment variable of MYSQL_DB
 func EnvMySqlDb() string {
 	var dbName string
@@ -60,11 +77,29 @@ func EnvMySqlUser() string {
 	return user
 }
 
+// EnvMySqlSlaveUser is to get the environment variable of MYSQL_USER
+func EnvMySqlSlaveUser() string {
+	var user string
+	if user = os.Getenv("MYSQL_SLAVE_USER"); len(user) == 0 {
+		user = defaultSqlSlaveUser
+	}
+	return user
+}
+
 // EnvMySqlPassword is to get the environment variable of MYSQL_PASSWORD
 func EnvMySqlPassword() string {
 	var password string
 	if password = os.Getenv("MYSQL_PASSWORD"); len(password) == 0 {
 		password = defaultSqlPassword
+	}
+	return password
+}
+
+// EnvMySqlSlavePassword is to get the environment variable of MYSQL_PASSWORD
+func EnvMySqlSlavePassword() string {
+	var password string
+	if password = os.Getenv("MYSQL_SLAVE_PASSWORD"); len(password) == 0 {
+		password = defaultSqlSlaveUser
 	}
 	return password
 }
