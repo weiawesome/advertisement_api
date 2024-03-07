@@ -12,6 +12,12 @@ func TestEnvMySqlAddress(t *testing.T) {
 	})
 }
 
+func TestEnvMySqlSlaveAddress(t *testing.T) {
+	t.Run("Case of EnvMySqlSlaveAddress", func(t *testing.T) {
+		assert.Equal(t, EnvMySqlSlaveAddress(), defaultSqlSlaveHost+":"+defaultSqlSlavePort)
+	})
+}
+
 func TestEnvMySqlDb(t *testing.T) {
 	t.Run("Case of EnvMySqlDb", func(t *testing.T) {
 		assert.Equal(t, EnvMySqlDb(), defaultSqlDb)
@@ -24,9 +30,21 @@ func TestEnvMySqlUser(t *testing.T) {
 	})
 }
 
+func TestEnvMySqlSlaveUser(t *testing.T) {
+	t.Run("Case of EnvMySqlSlaveUser", func(t *testing.T) {
+		assert.Equal(t, EnvMySqlSlaveUser(), defaultSqlSlaveUser)
+	})
+}
+
 func TestEnvMySqlPassword(t *testing.T) {
 	t.Run("Case of EnvMySqlPassword", func(t *testing.T) {
 		assert.Equal(t, EnvMySqlPassword(), defaultSqlPassword)
+	})
+}
+
+func TestEnvMySqlSlavePassword(t *testing.T) {
+	t.Run("Case of EnvMySqlSlavePassword", func(t *testing.T) {
+		assert.Equal(t, EnvMySqlSlavePassword(), defaultSqlSlavePassword)
 	})
 }
 

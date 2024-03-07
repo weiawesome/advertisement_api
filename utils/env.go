@@ -12,7 +12,7 @@ var (
 	defaultSqlHost          = "localhost"       // default sql host
 	defaultSqlSlaveHost     = "localhost"       // default sql host
 	defaultSqlPort          = "3306"            // default sql port
-	defaultSqlSalvePort     = "3306"            // default sql port
+	defaultSqlSlavePort     = "3306"            // default sql port
 	defaultSqlDb            = "DefaultDb"       // default sql db name
 	defaultSqlUser          = "DefaultUser"     // default sql user
 	defaultSqlSlaveUser     = "DefaultUser"     // default sql user
@@ -54,7 +54,7 @@ func EnvMySqlSlaveAddress() string {
 		ip = defaultSqlSlaveHost
 	}
 	if port = os.Getenv("MYSQL_SLAVE_PORT"); len(port) == 0 {
-		port = defaultSqlSalvePort
+		port = defaultSqlSlavePort
 	}
 	return ip + ":" + port
 }

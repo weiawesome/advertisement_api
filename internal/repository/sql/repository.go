@@ -26,5 +26,5 @@ type repository struct {
 // NewRepository is the constructor for the sql repository
 func NewRepository() Repository {
 	// return a new sql repository with the sql database client
-	return &repository{db: utils.GetDB(), dbSlave: utils.GetDBSalve()}
+	return &repository{db: utils.GetDB(), dbSlave: utils.GetDBSlave()}
 }

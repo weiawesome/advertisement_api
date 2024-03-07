@@ -24,6 +24,24 @@ func TestConnectDB(t *testing.T) {
 	})
 }
 
+func TestConnectDBSlave(t *testing.T) {
+	t.Run("Right case", func(t *testing.T) {
+		host := os.Getenv("MYSQL_SLAVE_HOST")
+		err := os.Setenv("MYSQL_SLAVE_HOST", "Not exist host")
+		if err != nil {
+			t.Errorf("error to get environment " + err.Error())
+			return
+		}
+		_, err = connectDBSlave()
+		assert.NotNil(t, err)
+		err = os.Setenv("MYSQL_SLAVE_HOST", host)
+		if err != nil {
+			t.Errorf("error to set environment " + err.Error())
+			return
+		}
+	})
+}
+
 func TestInitDB(t *testing.T) {
 	t.Run("Right case", func(t *testing.T) {
 		host := os.Getenv("MYSQL_HOST")
@@ -49,6 +67,13 @@ func TestGetDB(t *testing.T) {
 	})
 }
 
+func TestGetDBSlave(t *testing.T) {
+	t.Run("Right case get sql database", func(t *testing.T) {
+		sqlDb := GetDBSlave()
+		assert.Equal(t, dbSlave, sqlDb)
+	})
+}
+
 func TestCloseDB(t *testing.T) {
 	t.Run("Right case when db is nil", func(t *testing.T) {
 		db = nil
@@ -58,6 +83,19 @@ func TestCloseDB(t *testing.T) {
 	t.Run("Right case when db is not nil", func(t *testing.T) {
 		_ = InitDB()
 		err := CloseDB()
+		assert.Nil(t, err)
+	})
+}
+
+func TestCloseDBSlave(t *testing.T) {
+	t.Run("Right case when db is nil", func(t *testing.T) {
+		db = nil
+		err := CloseDBSlave()
+		assert.Nil(t, err)
+	})
+	t.Run("Right case when db is not nil", func(t *testing.T) {
+		_ = InitDB()
+		err := CloseDBSlave()
 		assert.Nil(t, err)
 	})
 }

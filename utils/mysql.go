@@ -70,8 +70,8 @@ func GetDB() *gorm.DB {
 	return db
 }
 
-// GetDBSalve is to get the db slave instance
-func GetDBSalve() *gorm.DB {
+// GetDBSlave is to get the db slave instance
+func GetDBSlave() *gorm.DB {
 	return dbSlave
 }
 
