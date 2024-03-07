@@ -15,7 +15,7 @@ export const options={
 
 function getRandomAge(){
     const ages = [
-        {name: Array.from({ length: 25 }, (_, i) => i), distribution: 19.13},
+        {name: Array.from({ length: 24 }, (_, i) => 1+i), distribution: 19.13},
         {name: Array.from({ length: 10 }, (_, i) => 25+i), distribution: 30.44},
         {name: Array.from({ length: 10 }, (_, i) => 35+i), distribution: 22.93},
         {name: Array.from({ length: 10 }, (_, i) => 45+i), distribution: 14.14},
@@ -31,6 +31,7 @@ function getRandomAge(){
             return age.name[Math.floor(Math.random() * age.name.length)]
         }
     }
+    return ages[ages.length-1].name[Math.floor(Math.random() * ages[ages.length-1].name.length)]
 }
 function getRandomCountry(){
     const countries = [
@@ -94,7 +95,12 @@ function getRandomLimit(){
 }
 
 export default function () {
-    const requestUrl = __ENV.REQUEST_URL;
+    var requestUrl = __ENV.REQUEST_URL;
+
+    if (requestUrl===undefined){
+        requestUrl="http://127.0.0.1"
+    }
+
     const url = requestUrl+"/api/v1/ad"+"?"
         +"age="+getRandomAge()+"&"
         +"country="+getRandomCountry()+"&"
