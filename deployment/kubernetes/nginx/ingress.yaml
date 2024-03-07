@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  labels:
+    app: nginx-ingress
+    version: "1"
+    env: staging
+    tier: backend-proxy
+    role: ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /api/v1
+        pathType: Prefix
+        backend:
+          service:
+            name: go-service
+            port:
+              number: 8080
+

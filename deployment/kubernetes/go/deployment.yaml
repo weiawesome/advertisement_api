@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-server
+  labels:
+    app: go-server
+    version: "1"
+    env: staging
+    tier: backend
+    role: backend-server
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 50%
+      maxSurge: 25%
+  selector:
+    matchLabels:
+      app: go-server
+  template:
+    metadata:
+      labels:
+        app: go-server
+        version: "1"
+        env: staging
+        tier: backend
+        role: backend-server
+    spec:
+      containers:
+      - name: go-server
+        image: tcweeei/advertisement-api:local-kubernetes-arm
+        env:
+          - name: REDIS_PASSWOR
+            valueFrom:
+              secretKeyRef:
+                name: redis-secret
+                key: redis-password
+          - name: REDIS_HOST
+            value: "helm-redis-redis-cluster"
+          - name: REDIS_PORT
+            value: "6379"
+              
+          - name: MYSQL_HOST
+            value: "helm-mysql-primary-headless"
+          - name: MYSQL_SLAVE_HOST
+            value: "helm-mysql-secondary-headless"
+          - name: MYSQL_USER
+            value: "DefaultUser"
+          - name: MYSQL_SLAVE_USER
+            value: "DefaultUser"
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-secret
+                key: mysql-password
+          - name: MYSQL_SLAVE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-secret
+                key: mysql-replication-password
+          - name: MYSQL_DB
+            value: "DefaultDb"
+
+          - name: INFLUXDB_HOST
+            value: "helm-influxdb"
+          - name: INFLUXDB_PORT
+            value: "8086"
+          - name: INFLUXDB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: influxdb-secret
+                key: admin-user-token
+          - name: INFLUXDB_ORG
+            value: "DefaultOrg"
+          - name: INFLUXDB_BUCKET
+            value: "DefaultBucket"
+
