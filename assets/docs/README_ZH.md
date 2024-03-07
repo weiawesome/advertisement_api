@@ -642,10 +642,10 @@ mobile 與 tablet 歸類於 手持裝置
 ### 系統部署 - Docker-compose 資訊
 ![deployment_docker-compose.png](../deployment_docker-compose.png)
 ### 系統部署 - Kubernetes 資訊
-![kubernetes_workload.png](kubernetes_workload.png)
-![kubernetes_deployment.png](kubernetes_deployment.png)
-![kubernetes_stateful_sets.png](kubernetes_stateful_sets.png)
-![kubernetes_information.png](kubernetes_information.png)
+![kubernetes_workload.png](../kubernetes_workload.png)
+![kubernetes_deployment.png](../kubernetes_deployment.png)
+![kubernetes_stateful_sets.png](../kubernetes_stateful_sets.png)
+![kubernetes_information.png](../kubernetes_information.png)
 
 ```
 備註 :
