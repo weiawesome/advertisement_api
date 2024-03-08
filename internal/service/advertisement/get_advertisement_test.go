@@ -30,6 +30,16 @@ func TestGet(t *testing.T) {
 		assert.Equal(t, 1, len(result.Items))
 		assert.Equal(t, redis.CacheResult, result.Items[0].Title)
 	})
+	t.Run("Case right (Cache hit)", func(t *testing.T) {
+		sqlRepository := sql.RepositoryMock{}
+		redisRepository := redis.RepositoryMock{}
+		service := getService{SqlRepository: &sqlRepository, RedisRepository: &redisRepository}
+
+		result, err := service.Get("", 0, sql.NormalCase, redis.CacheHitCase, redis.CacheHitCase, 10, 10)
+
+		assert.Equal(t, nil, err)
+		assert.Equal(t, 0, len(result.Items))
+	})
 	t.Run("Case right (Cache miss)", func(t *testing.T) {
 		sqlRepository := sql.RepositoryMock{}
 		redisRepository := redis.RepositoryMock{}
@@ -39,6 +49,15 @@ func TestGet(t *testing.T) {
 		assert.Equal(t, nil, err)
 		assert.Equal(t, 1, len(result.Items))
 		assert.Equal(t, sql.NormalCase, result.Items[0].Title)
+	})
+	t.Run("Case right (Cache miss)", func(t *testing.T) {
+		sqlRepository := sql.RepositoryMock{}
+		redisRepository := redis.RepositoryMock{}
+		service := getService{SqlRepository: &sqlRepository, RedisRepository: &redisRepository}
+
+		result, err := service.Get(redis.CacheMissCase, 0, sql.NormalCase, "M", "ios", 10, 10)
+		assert.Equal(t, nil, err)
+		assert.Equal(t, 0, len(result.Items))
 	})
 	t.Run("Case error", func(t *testing.T) {
 		sqlRepository := sql.RepositoryMock{}
