@@ -29,9 +29,9 @@ spec:
     spec:
       containers:
       - name: go-server
-        image: tcweeei/advertisement-api:local-kubernetes-arm
+        image: tcweeei/advertisement-api:latest
         env:
-          - name: REDIS_PASSWOR
+          - name: REDIS_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: redis-secret
@@ -43,22 +43,13 @@ spec:
               
           - name: MYSQL_HOST
             value: "helm-mysql-primary-headless"
-          - name: MYSQL_SLAVE_HOST
-            value: "helm-mysql-secondary-headless"
           - name: MYSQL_USER
-            value: "DefaultUser"
-          - name: MYSQL_SLAVE_USER
             value: "DefaultUser"
           - name: MYSQL_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: mysql-secret
                 key: mysql-password
-          - name: MYSQL_SLAVE_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: mysql-secret
-                key: mysql-replication-password
           - name: MYSQL_DB
             value: "DefaultDb"
 
