@@ -434,6 +434,14 @@ K6 是一款開源、免費的負載測試工具，用於測試 Web 應用程式
 
 參考於 [Grafana 與 K6 對於測試計畫的分類](https://grafana.com/load-testing/types-of-load-testing/)
 
+```
+備註 :
+    鑒於本題目的情境假設下，認為新增廣告僅為是經由公司審核後呼叫(流量邏輯上不會過大)
+    
+    因此在 "新增廣告" 該路由僅測試 (時段內請求限制、每日請求限制)
+    而 "獲取廣告" 則會進行下方一系列的流量測試
+```
+
 #### 冒煙測試 (smoke testing)
 主要目的為測試伺服器能基本運行，為小的流量與時間。
 ```javascript
@@ -641,6 +649,10 @@ mobile 與 tablet 歸類於 手持裝置
 ```
 ### 系統部署 - Docker-compose 資訊
 ![deployment_docker-compose.png](../deployment_docker-compose.png)
+```
+備註 :
+    圖片中顯示為應用程序使用的所有容器及其對應端口
+```
 ### 系統部署 - Kubernetes 資訊
 ![kubernetes_workload.png](../kubernetes_workload.png)
 ![kubernetes_deployment.png](../kubernetes_deployment.png)
@@ -673,6 +685,12 @@ mobile 與 tablet 歸類於 手持裝置
 ```
 ### API 基礎測試 (新增與獲取廣告)
 ![add_advertisement_request.png](../add_advertisement_request.png)
+![get_advertisement_request.png](../get_advertisement_request.png)
+```
+備註 :
+    上圖為 新增廣告請求 下圖為 獲取廣告請求 
+    (二者均為題目範例之請求內容)
+```
 ### 流量測試 - 冒煙測試
 ### 流量測試 - 負載測試
 ### 流量測試 - 壓力測試
