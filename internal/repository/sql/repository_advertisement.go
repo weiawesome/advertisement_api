@@ -180,7 +180,7 @@ func checkDurationLimit(tx *gorm.DB, startAt time.Time, endAt time.Time, checkEq
 	var periodRequest int64
 
 	// search the number of the advertisement in the period
-	if err := tx.Model(model.Advertisement{}).Where("start_at <= ?", startAt).Where("end_at >= ?", endAt).Count(&periodRequest).Error; err != nil {
+	if err := tx.Model(model.Advertisement{}).Where("start_at <= ?", endAt).Where("end_at >= ?", startAt).Count(&periodRequest).Error; err != nil {
 		return err
 	}
 
