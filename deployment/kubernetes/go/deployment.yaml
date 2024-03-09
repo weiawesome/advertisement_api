@@ -29,6 +29,8 @@ spec:
     spec:
       containers:
       - name: go-server
+#        for the case in arm architecture
+#        image: tcweeei/advertisement-api:local-kubernetes
         image: tcweeei/advertisement-api:local-kubernetes-arm
         env:
           - name: REDIS_PASSWOR
