@@ -695,6 +695,15 @@ mobile 與 tablet 歸類於 手持裝置
     另外在實驗中有使用 樹莓派-5 作為伺服器 使用 Kubernetes 部署
         因此還有分別撰寫 X86 與 ARM 版本
 ```
+![GKE_information.png](../GKE_information.png)
+```
+備註 :
+    上圖為透過 GKE 部署的 kuberenets 叢集
+        MySQL 採用 GCP 的 Cloud SQL
+        Redis 採用 GCP 的 memorystore
+        
+        採用私人 IP 相連，叢集服務則採用 LoadBalancer 公開訪問 
+```
 ### 單元測試 - 測試代碼覆蓋率
 ![unit_test_api.png](../unit_test_api.png)
 ![unit_test_internal.png](../unit_test_internal.png)
@@ -713,11 +722,37 @@ mobile 與 tablet 歸類於 手持裝置
     (二者均為題目範例之請求內容)
 ```
 ### 流量測試 - 冒煙測試
+![smoke_test.png](../smoke_test.png)
 ### 流量測試 - 負載測試
+```
+備註 :
+    該項於免費版 GCP 帳戶未達要求，故未放資訊
+    可於未來提升硬體效能後，再次進行測試。
+```
 ### 流量測試 - 壓力測試
+```
+備註 :
+    該項於免費版 GCP 帳戶未達要求，故未放資訊
+    可於未來提升硬體效能後，再次進行測試。
+```
 ### 流量測試 - 浸泡測試
+```
+備註 :
+    該項於免費版 GCP 帳戶未達要求，故未放資訊
+    可於未來提升硬體效能後，再次進行測試。
+```
 ### 流量測試 - 尖峰測試
+```
+備註 :
+    該項於免費版 GCP 帳戶未達要求，故未放資訊
+    可於未來提升硬體效能後，再次進行測試。
+```
 ### 流量測試 - 斷點測試
+```
+備註 :
+    該項於免費版 GCP 帳戶未達要求，故未放資訊
+    可於未來提升硬體效能後，再次進行測試。
+```
 
 ### 併發流量測試 - 單日限制
 ![day_limit_test.png](../day_limit_test.png)
@@ -763,6 +798,4 @@ mobile 與 tablet 歸類於 手持裝置
 - [ ] 使用固定腳本 每日清除或是轉移過期廣告資訊
 - [ ] 對於熱門的請求 採用預熱資訊先將其放置於快取
 - [ ] 更加完整的監控資訊
-
-![img.png](img.png)
-![img_1.png](img_1.png)
+- [ ] 尋找更好的建設方式，已達成流量限制要求
