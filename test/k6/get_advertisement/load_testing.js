@@ -5,9 +5,9 @@ export const options={
     scenarios: {
         contacts: {
             executor: "constant-arrival-rate",
-            rate: 100,
+            rate: 10000,
             timeUnit: "1s",
-            preAllocatedVUs: 150,
+            preAllocatedVUs: 25000,
             duration:"10m"
         },
     }
@@ -121,5 +121,9 @@ export default function () {
         "Status is 200": (res) => res.status === 200,
     });
 
+    if (response.status!==200){
+        console.log(response.status)
+        console.log(response.body)
+    }
     sleep(1);
 }
