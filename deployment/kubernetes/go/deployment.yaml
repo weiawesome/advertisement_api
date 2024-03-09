@@ -33,7 +33,7 @@ spec:
 #        image: tcweeei/advertisement-api:local-kubernetes
         image: tcweeei/advertisement-api:local-kubernetes-arm
         env:
-          - name: REDIS_PASSWOR
+          - name: REDIS_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: redis-secret
